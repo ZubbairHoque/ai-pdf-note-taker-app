@@ -9,7 +9,7 @@ function Provider({children}: {children: ReactNode}) {
   
   return (
     <div>
-      <ConvexProvider client={convex}>{children}</ConvexProvider>;
+      <ConvexProvider client={convex}>{children}</ConvexProvider>
     </div>
   )
 }

@@ -6,6 +6,11 @@
 
 @import "tailwindcss-animate";
 
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-roboto);
+}
+
 :root {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

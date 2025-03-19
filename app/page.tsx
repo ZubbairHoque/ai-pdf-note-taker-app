@@ -1,6 +1,5 @@
 "use client";
 import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { useUser } from "@clerk/nextjs";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -24,9 +23,6 @@ export default function Home() {
     console.log(result);
   }
   return (
-    <div>
-      <h2>helow world</h2>
-  <Button></Button>
-    </div>
-  );
+    <div>Hello World!</div>
+  )
 }

@@ -1,9 +1,9 @@
+
+import React from "react";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import Provider from "./provider";
 import { ClerkProvider } from "@clerk/nextjs";
-
-
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
@@ -18,19 +18,24 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <ClerkProvider>
     <html lang="en">
       <body
-        className={` ${roboto.variable} antialiased`}
-      >
-
+        className={roboto.className} 
+      >  
       <Provider>
-        {children}
-      </Provider>
+        <div className="flex h-screen"> 
+          {/* Sidebar */} 
 
+          {/* Dashboard Content */}
+          <div className="flex-1 bg-gray-100 p-4">
+            {children}
+          </div>
+        </div>
+      </Provider>
       </body>
     </html>
   </ClerkProvider>

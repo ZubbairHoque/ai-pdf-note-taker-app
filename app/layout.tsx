@@ -1,3 +1,4 @@
+import "./globals.css";
 
 import React from "react";
 import type { Metadata } from "next";
@@ -27,11 +28,11 @@ export default function RootLayout({
         className={roboto.className} 
       >  
       <Provider>
-        <div className="flex h-screen"> 
+        <div > 
           {/* Sidebar */} 
 
           {/* Dashboard Content */}
-          <div className="flex-1 bg-gray-100 p-4">
+          <div>
             {children}
           </div>
         </div>

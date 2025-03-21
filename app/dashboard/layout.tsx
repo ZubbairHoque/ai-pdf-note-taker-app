@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import SidebarFunction from "./_components/sidebar";
+import Sidebar from "./_components/sidebar";
 
 
 function DashboardLayout({
@@ -10,10 +10,10 @@ function DashboardLayout({
 }) {
   return (
     <div>
-      <div className="w-64  h-screen fixed">
-        <SidebarFunction />
+      <div className="md:w-64  h-screen fixed">
+        <Sidebar />
       </div>
-      <div>
+      <div className="md:ml-64">
         {children}
       </div>
     </div>

@@ -4,11 +4,30 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@import "tailwindcss-animate";
-
 body {
   font-family: Arial, Helvetica, sans-serif;
   font-family: var(--font-roboto);
+}
+
+/* Ensure the parent container uses flexbox */
+.flex {
+  display: flex;
+}
+
+/* Sidebar and main content specific styles */
+/* Sidebar styles */
+.sidebar {
+  background: linear-gradient(
+    to bottom,
+    var(--color-sidebar, #0a0f1a),
+    var(--color-sidebar-border, #4a4a4a)
+  ); /* Dark blue to grey gradient */
+  color: var(--color-sidebar-foreground, #ffffff); /* White text */
+}
+
+.main-content {
+  margin-left: 16rem; /* Match the width of the sidebar */
+  flex: 1;
 }
 
 :root {

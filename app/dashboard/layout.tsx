@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Sidebar from "./_components/sidebar";
+import Header from "./_components/Header";
 
 
 function DashboardLayout({
@@ -14,7 +15,10 @@ function DashboardLayout({
         <Sidebar />
       </div>
       <div className="md:ml-64">
-        {children}
+        <Header />
+        <div className="p-10">
+          {children}
+        </div>
       </div>
     </div>
   )

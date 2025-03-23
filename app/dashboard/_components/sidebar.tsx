@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
 import React from "react";
-
+import UploadPdfDialogue from "./UploadPdfDialogue";
 function Sidebar() {
   return (
     <div className="shadow-md h-screen p-3 bg-white">
@@ -13,7 +13,9 @@ function Sidebar() {
         />
       </div>
       <div className="mt-5 mb-4">
-        <Button className="w-full">+ Upload PDF</Button>
+        <UploadPdfDialogue>
+          <Button className="w-full">+ Upload PDF</Button>
+        </UploadPdfDialogue>        
       </div>
 
       {/* Sidebar Options */}
@@ -27,7 +29,7 @@ function Sidebar() {
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            className="text-gray-600"
+            className="text-black"
           >
             <g fill="none" fillRule="evenodd">
               <path
@@ -49,7 +51,7 @@ function Sidebar() {
               />
             </g>
           </svg>
-          <h2 className="text-gray-800">Workspace</h2>
+          <h2 className="text-black">Workspace</h2>
         </button>
       </div>
       <div className="mt-2">

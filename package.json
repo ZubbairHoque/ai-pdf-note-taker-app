@@ -33,13 +33,15 @@
     "react-pro-sidebar": "^1.1.0",
     "repo": "^0.0.15",
     "tailwind-merge": "^3.0.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "uuid4": "^2.0.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

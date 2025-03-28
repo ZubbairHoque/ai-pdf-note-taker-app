@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,16 +15,15 @@ import { api } from "@/convex/_generated/api";
 import React, { useRef, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useMutation } from "convex/react";
+import { v4 as uuidv4 } from "uuid";
+import { getFileUrl } from "@/convex/fileStorage";
 
-function UploadPdfDialogue({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function UploadPdfDialogue({ children }: { children: React.ReactNode }) {
   // Generating a URL and uploading it to convex storage
   const generateUploadUrl = useMutation(api.fileStorage.generateUploadUrl);
   const savePdfFile = useMutation(api.fileStorage.savePdfFile);
   const { user } = useUser();
+  const getFileUrl = useMutation(api.fileStorage.getFileUrl);
 
   // JavaScript logic for handling file input
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -46,11 +45,11 @@ function UploadPdfDialogue({
 
   const OnUpload = async () => {
     setLoading(true); // Set loading to true when the upload starts
-
+  
     try {
       // Step 1: Get short-lived upload URL
       const postUrl = await generateUploadUrl();
-
+  
       // Step 2: POST the file to the URL
       const file = fileInputRef.current?.files?.[0];
       if (!file) {
@@ -58,31 +57,38 @@ function UploadPdfDialogue({
         setLoading(false); // Stop loading if no file is selected
         return;
       }
-
+  
       const result = await fetch(postUrl, {
         method: "POST",
         headers: { "Content-Type": file.type },
         body: file,
       });
-
+  
       const { storageId } = await result.json();
       console.log("storageId", storageId);
+      
+      // creates a file ID
+      const fileID = uuidv4();
 
-      const { randomUUID } = require("crypto");
-      const fileID = randomUUID();
-
+      // Generate public URL using the storage ID
+      const fileUrl = await getFileUrl({storage: storageId});
+  
       // Step 3: Save the newly allocated storage ID to the database
       const response = await savePdfFile({
         fileID: fileID,
         fileName: customFileName ?? "Untitled",
         storageId: storageId,
+        fiLeUrl: fileUrl ?? "",
         createdBy: user?.primaryEmailAddress?.emailAddress ?? "unknown",
       });
-
+  
       console.log("response", response);
     } catch (error) {
       console.error("Error during upload:", error);
     } finally {
+      // Reset the file name and custom file name fields
+      setFileName("No file chosen");
+      setCustomFileName("");
       setLoading(false); // Set loading to false when the upload completes or fails
     }
   };
@@ -95,7 +101,9 @@ function UploadPdfDialogue({
           <DialogTitle>Upload PDF file?</DialogTitle>
           <DialogDescription asChild>
             <div className="mt-5">
-              <h2 className="text-lg font-semibold mb-4">Select a file to upload:</h2>
+              <h2 className="text-lg font-semibold mb-4">
+                Select a file to upload:
+              </h2>
               <div className="flex items-center gap-4 mt-5">
                 {/* Hidden File Input */}
                 <input
@@ -116,12 +124,19 @@ function UploadPdfDialogue({
                 </button>
 
                 {/* Display Selected File Name */}
-                <span className="text-gray-600 text-sm italic">{fileName}</span>
+                {fileName !== "No file chosen" && (
+                  <span className="text-gray-600 text-sm italic">
+                    {fileName}
+                  </span>
+                )}
               </div>
 
               {/* Input Field for Custom File Name */}
               <div className="mt-5">
-                <label htmlFor="customFileName" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="customFileName"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   File Name <span className="text-red-500">*</span>
                 </label>
                 <Input

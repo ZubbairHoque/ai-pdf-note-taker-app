@@ -12,6 +12,7 @@ export const savePdfFile = mutation({
     fileID:  v.string(),
     storageId:  v.string(), 
     fileName: v.string(),
+    fiLeUrl: v.string(),
     createdBy: v.string(),
 
   },
@@ -26,6 +27,7 @@ export const savePdfFile = mutation({
       fileID: args.fileID,
       storageId: args.storageId,
       fileName: args.fileName,
+      fileUrl:args.fiLeUrl,
       createdBy: args.createdBy,
 
       // You can add more fields like userId if you have authentication
@@ -35,3 +37,13 @@ export const savePdfFile = mutation({
   },
 
 });
+
+export const getFileUrl=mutation({
+  args:{
+    storage:v.string()
+  },
+  handler:async(ctx,args)=>{
+    const url=await ctx.storage.getUrl(args.storage)
+    return url;
+  }
+})

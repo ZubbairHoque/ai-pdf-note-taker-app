@@ -16,7 +16,6 @@ import React, { useRef, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useMutation } from "convex/react";
 import { v4 as uuidv4 } from "uuid";
-import { getFileUrl } from "@/convex/fileStorage";
 
 function UploadPdfDialogue({ children }: { children: React.ReactNode }) {
   // Generating a URL and uploading it to convex storage

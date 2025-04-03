@@ -85,7 +85,7 @@ function UploadPdfDialogue({ children }: { children: React.ReactNode }) {
       
       //API Call to fetch the pdf loader
       const ApiRes = await Axios.get('api/pdf-loader');
-      console.log(ApiRes.data.result);
+      console.log(ApiRes.data.message);
       setFileName("No file chosen");
       setCustomFileName("");
 

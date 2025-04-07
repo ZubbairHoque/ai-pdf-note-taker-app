@@ -14,7 +14,7 @@ import { api } from "@/convex/_generated/api";
 
 import React, { useRef, useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import { useMutation } from "convex/react";
+import { useAction, useMutation } from "convex/react";
 import { v4 as uuidv4 } from "uuid";
 import Axios from "axios";
 
@@ -30,6 +30,7 @@ function UploadPdfDialogue({ children }: { children: React.ReactNode }) {
   const [fileName, setFileName] = useState<string>("No file chosen");
   const [customFileName, setCustomFileName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false); // Corrected state name to `setLoading`
+  const embeddDocument = useAction(api.myAction.ingest)
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -46,50 +47,50 @@ function UploadPdfDialogue({ children }: { children: React.ReactNode }) {
   const OnUpload = async () => {
     setLoading(true); // Set loading to true when the upload starts
   
-    // // Step 1: Get short-lived upload URL
-    // const postUrl = await generateUploadUrl();
+    // Step 1: Get short-lived upload URL
+    const postUrl = await generateUploadUrl();
   
-    // // Step 2: POST the file to the URL
-    // const file = fileInputRef.current?.files?.[0];
-    // if (!file) {
-    //   console.error("No file selected");
-    //   setLoading(false); // Stop loading if no file is selected
-    //   return;
-    // }
+    // Step 2: POST the file to the URL
+    const file = fileInputRef.current?.files?.[0];
+    if (!file) {
+      console.error("No file selected");
+      setLoading(false); // Stop loading if no file is selected
+      return;
+    }
   
-    // const result = await fetch(postUrl, {
-    //     method: "POST",
-    //     headers: { "Content-Type": file.type },
-    //     body: file,
-    //   });
+    const result = await fetch(postUrl, {
+        method: "POST",
+        headers: { "Content-Type": file.type },
+        body: file,
+      });
   
-    // const { storageId } = await result.json();
-    // console.log("storageId", storageId);
+    const { storageId } = await result.json();
+    console.log("storageId", storageId);
       
-    // // creates a file ID
-    // const fileID = uuidv4();
+    // creates a file ID
+    const fileID = uuidv4();
 
-    // // Generate public URL using the storage ID
-    // const fileUrl = await getFileUrl({storage: storageId});
+    // Generate public URL using the storage ID
+    const fileUrl = await getFileUrl({storage: storageId});
   
-    // // Step 3: Save the newly allocated storage ID to the database
-    // const response = await savePdfFile({
-    //     fileID: fileID,
-    //     fileName: customFileName ?? "Untitled",
-    //     storageId: storageId,
-    //     fiLeUrl: fileUrl ?? "",
-    //     createdBy: user?.primaryEmailAddress?.emailAddress ?? "unknown",
-    //   });
+    // Step 3: Save the newly allocated storage ID to the database
+    const response = await savePdfFile({
+        fileID: fileID,
+        fileName: customFileName ?? "Untitled",
+        storageId: storageId,
+        fiLeUrl: fileUrl ?? "",
+        createdBy: user?.primaryEmailAddress?.emailAddress ?? "unknown",
+      });
 
-    //   console.log(response);
+      console.log(response);
       
       //API Call to fetch the pdf loader
       const ApiRes = await Axios.get('api/pdf-loader');
-      console.log(ApiRes.data.message);
+      console.log(ApiRes.data.result);
       setFileName("No file chosen");
       setCustomFileName("");
 
-    
+      embeddDocument({});
       setLoading(false); // Set loading to false when the upload completes or fails
   };
 

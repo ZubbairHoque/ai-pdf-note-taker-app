@@ -1,41 +1,73 @@
 import { NextResponse } from "next/server";
 import { WebPDFLoader } from "@langchain/community/document_loaders/web/pdf";
-import { CharacterTextSplitter } from "@langchain/textsplitters";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 
-const pdfUrl = "https://courteous-spider-354.convex.cloud/api/storage/afbff115-0c8a-4274-8baa-80dc9686da1b"
 export async function GET(req) {
   try {
-    // 1. Load the PDF file
-    const response = await fetch(pdfUrl);
-    const data = await response.blob();
-    const loader = new WebPDFLoader(data);
-    const docs = await loader.load();
+    const reqUrl = req.url;
+    const { searchParams } = new URL(reqUrl);
+    const pdfUrl = searchParams.get("pdfUrl");
 
-    // Combine the text content from all pages
+    if (!pdfUrl) {
+      console.error("No PDF URL provided");
+      return NextResponse.json({ error: "No PDF URL provided" }, { status: 400 });
+    }
+
+    // Fetch the PDF file
+    let response;
+    try {
+      response = await fetch(pdfUrl);
+      if (!response.ok) {
+        console.error("Failed to fetch PDF:", response.statusText);
+        return NextResponse.json({ error: "Failed to fetch PDF" }, { status: response.status });
+      }
+    } catch (error) {
+      console.error("Error fetching PDF:", error);
+      return NextResponse.json({ error: "Error fetching PDF" }, { status: 500 });
+    }
+
+    // Load the PDF
+    let docs;
+    try {
+      const data = await response.blob();
+      const loader = new WebPDFLoader(data);
+      docs = await loader.load();
+    } catch (error) {
+      console.error("Error loading PDF:", error);
+      return NextResponse.json({ error: "Error loading PDF" }, { status: 500 });
+    }
+
+    // Combine text content
     let pdfTextContent = "";
     docs.forEach((doc) => {
-      pdfTextContent =pdfTextContent + doc.pageContent;
+      pdfTextContent += doc.pageContent;
     });
 
-    // 2. Split the text content into chunks
+    if (!pdfTextContent) {
+      console.error("No text content extracted from PDF");
+      return NextResponse.json({ error: "No text content extracted from PDF" }, { status: 500 });
+    }
+
+    // Split the text into chunks
     const textSplitter = new RecursiveCharacterTextSplitter({
-        chunkSize: 100,
-        chunkOverlap: 20,
-      });
+      chunkSize: 100,
+      chunkOverlap: 20,
+    });
 
-    // Pass the text content as an array of strings
-    const output = await textSplitter.createDocuments([pdfTextContent]);
+    let output;
+    try {
+      output = await textSplitter.createDocuments([pdfTextContent]);
+    } catch (error) {
+      console.error("Error splitting text:", error);
+      return NextResponse.json({ error: "Error splitting text" }, { status: 500 });
+    }
 
-    let splitterList = [];
-    output.forEach(doc =>{
-        splitterList.push(doc.pageContent)
-    })
+    const splitterList = output.map((doc) => doc.pageContent);
 
     // Return the output as a JSON response
-    return NextResponse.json({ result: splitterList});
+    return NextResponse.json({ result: splitterList });
   } catch (error) {
-    console.error("Error processing PDF:", error);
+    console.error("Unexpected error:", error);
     return NextResponse.json({ error: "Failed to process PDF" }, { status: 500 });
   }
 }

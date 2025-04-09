@@ -90,7 +90,10 @@ function UploadPdfDialogue({ children }: { children: React.ReactNode }) {
       setFileName("No file chosen");
       setCustomFileName("");
 
-      embeddDocument({});
+      const emmbeddedResult =embeddDocument({
+        splitText:ApiRes.data.result,
+        fileID:"123"
+      });
       setLoading(false); // Set loading to false when the upload completes or fails
   };
 

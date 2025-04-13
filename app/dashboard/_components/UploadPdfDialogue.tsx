@@ -18,7 +18,7 @@ import { useAction, useMutation } from "convex/react";
 import { v4 as uuidv4 } from "uuid";
 import Axios from "axios";
 
-function UploadPdfDialogue({ children }: { children: React.ReactNode }) {
+function UploadPdfDialogue() {
   // Generating a URL and uploading it to convex storage
   const generateUploadUrl = useMutation(api.fileStorage.generateUploadUrl);
   const savePdfFile = useMutation(api.fileStorage.savePdfFile);
@@ -31,6 +31,7 @@ function UploadPdfDialogue({ children }: { children: React.ReactNode }) {
   const [customFileName, setCustomFileName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false); // Corrected state name to `setLoading`
   const embeddDocument = useAction(api.myAction.ingest)
+  const [open, setOpen] = useState(false);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -90,17 +91,19 @@ function UploadPdfDialogue({ children }: { children: React.ReactNode }) {
       setFileName("No file chosen");
       setCustomFileName("");
 
-      const emmbeddedResult = embeddDocument({
+      await embeddDocument({
         splitText:ApiRes.data.result,
-        fileID:"123"
+        fileID:fileID,
       });
-      console.log(emmbeddedResult);
       setLoading(false); // Set loading to false when the upload completes or fails
+      setOpen(false); // Close the dialog after successful upload
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={open}>
+      <DialogTrigger asChild>
+        <Button onClick={()=>setOpen(true)} className="w-full">+ Upload PDF File</Button>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Upload PDF file?</DialogTitle>

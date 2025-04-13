@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 // Generate the URL that you will upload the file to
 export const generateUploadUrl = mutation(async (ctx) => {
@@ -22,7 +22,7 @@ export const savePdfFile = mutation({
     // if (!identity) throw new Error("Unauthenticated");
 
     // Save the file metadata to your database
-    const fileId = await ctx.db.insert("pdfFiles", {
+    const fileID = await ctx.db.insert("pdfFiles", {
 
       fileID: args.fileID,
       storageId: args.storageId,
@@ -33,7 +33,7 @@ export const savePdfFile = mutation({
       // You can add more fields like userId if you have authentication
     });
     
-    return fileId;
+    return fileID;
   },
 
 });
@@ -45,5 +45,17 @@ export const getFileUrl=mutation({
   handler:async(ctx,args)=>{
     const url=await ctx.storage.getUrl(args.storage)
     return url;
+  }
+})
+
+export const GetFileRecord=query({
+  args:{
+    fileID:v.string()
+  },
+  handler:async(ctx,args)=>{
+     const result = await ctx.db.query("pdfFiles").filter((q)=>q.eq(q.field("fileID"),args.fileID))
+    .collect()
+    console.log(result);
+    return result;
   }
 })

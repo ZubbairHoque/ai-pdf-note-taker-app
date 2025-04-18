@@ -12,7 +12,7 @@ function Workspace() {
 
   // get the file info from the Convex using the fileID
   const fileInfo = useQuery(api.fileStorage.GetFileRecord,{
-    fileID:fileID
+    fileID: fileID as string || ''
   })
 
   useEffect(() => {

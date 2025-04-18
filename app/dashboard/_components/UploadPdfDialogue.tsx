@@ -18,7 +18,7 @@ import { useAction, useMutation } from "convex/react";
 import { v4 as uuidv4 } from "uuid";
 import Axios from "axios";
 
-function UploadPdfDialogue() {
+function UploadPdfDialogue({children}: {children: React.ReactNode}) {
   // Generating a URL and uploading it to convex storage
   const generateUploadUrl = useMutation(api.fileStorage.generateUploadUrl);
   const savePdfFile = useMutation(api.fileStorage.savePdfFile);

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 19, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/zubba/OneDrive/projects/ai-pdf-note-taker/app/workspace/_components/WorkspaceHeader.tsx"],"sourcesContent":["import Image from 'next/image'\r\nimport React from 'react'\r\n\r\nfunction WorkspaceHeader() {\r\n  return (\r\n    <div>\r\n        <Image src={\"/logo.PNG\"} alt ='workspace' width={140} height={100}/>\r\n    </div>\r\n  )\r\n}\r\n\r\nexport default WorkspaceHeader"],"names":[],"mappings":";;;;AAAA;;;AAGA,SAAS;IACP,qBACE,8OAAC;kBACG,cAAA,8OAAC,6HAAA,CAAA,UAAK;YAAC,KAAK;YAAa,KAAK;YAAY,OAAO;YAAK,QAAQ;;;;;;;;;;;AAGtE;uCAEe","debugId":null}},
+    {"offset": {"line": 51, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/zubba/OneDrive/projects/ai-pdf-note-taker/app/workspace/%5BfileID%5D/page.tsx"],"sourcesContent":["import React from 'react'\r\nimport WorkspaceHeader from '../_components/WorkspaceHeader'\r\nimport { useParams } from 'next/navigation'\r\n\r\nfunction page() {\r\n  const { fileID } = useParams()\r\n  return (\r\n    <div>\r\n      <WorkspaceHeader/>\r\n    </div>\r\n  )\r\n}\r\n\r\nexport default page"],"names":[],"mappings":";;;;AACA;AACA;AAAA;;;;AAEA,SAAS;IACP,MAAM,EAAE,MAAM,EAAE,GAAG,CAAA,GAAA,qLAAA,CAAA,YAAS,AAAD;IAC3B,qBACE,8OAAC;kBACC,cAAA,8OAAC,mJAAA,CAAA,UAAe;;;;;;;;;;AAGtB;uCAEe","debugId":null}}]
+}

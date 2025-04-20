@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 25, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/zubba/OneDrive/projects/ai-pdf-note-taker/app/dashboard/page.tsx"],"sourcesContent":["import { UserButton } from '@clerk/nextjs'\r\nimport React from 'react'\r\n\r\nexport default function Dashboard() {\r\n  return (\r\n    <div>Dashboard <UserButton /></div>\r\n  )\r\n}\r\n\r\n"],"names":[],"mappings":";;;;AAAA;;;AAGe,SAAS;IACtB,qBACE,8OAAC;;YAAI;0BAAU,8OAAC,sLAAA,CAAA,aAAU;;;;;;;;;;;AAE9B","debugId":null}}]
+}

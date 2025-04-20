@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/zubba/OneDrive/projects/ai-pdf-note-taker/app/dashboard/_components/Sidebar.tsx"],"sourcesContent":["import React from 'react'\r\n\r\nfunction SidebarFunction() {\r\n  return (\r\n    <div> sidebar</div>\r\n  )\r\n}\r\n\r\nexport default SidebarFunction"],"names":[],"mappings":";;;;;AAEA,SAAS;IACP,qBACE,8OAAC;kBAAI;;;;;;AAET;uCAEe","debugId":null}},
+    {"offset": {"line": 28, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/zubba/OneDrive/projects/ai-pdf-note-taker/app/dashboard/layout.tsx"],"sourcesContent":["\"use client\";\r\nimport React from \"react\";\r\nimport SidebarFunction from \"./_components/Sidebar\";\r\n\r\nfunction DashboardLayout({\r\n  children,\r\n}: {\r\n  children: React.ReactNode;\r\n}) {\r\n  return (\r\n    <div className=\"w-64 h-screen \">\r\n      <div>\r\n        <SidebarFunction />\r\n      </div>\r\n      <div className=\"ml-64 w-full\">\r\n        {children}\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n\r\nexport default DashboardLayout;"],"names":[],"mappings":";;;;AAEA;AAFA;;;AAIA,SAAS,gBAAgB,EACvB,QAAQ,EAGT;IACC,qBACE,8OAAC;QAAI,WAAU;;0BACb,8OAAC;0BACC,cAAA,8OAAC,2IAAA,CAAA,UAAe;;;;;;;;;;0BAElB,8OAAC;gBAAI,WAAU;0BACZ;;;;;;;;;;;;AAIT;uCAEe","debugId":null}}]
+}

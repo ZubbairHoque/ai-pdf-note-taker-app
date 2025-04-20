@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/zubba/OneDrive/projects/ai-pdf-note-taker/app/dashboard/_components/sidebar.tsx"],"sourcesContent":["import React from 'react'\r\n\r\nfunction SidebarFunction() {\r\n  return (\r\n    <div> sidebar</div>\r\n  )\r\n}\r\n\r\nexport default SidebarFunction"],"names":[],"mappings":";;;;;AAEA,SAAS;IACP,qBACE,6LAAC;kBAAI;;;;;;AAET;KAJS;uCAMM","debugId":null}}]
+}

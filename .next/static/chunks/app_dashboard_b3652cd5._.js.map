@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/zubba/OneDrive/projects/ai-pdf-note-taker/app/dashboard/_components/header.tsx"],"sourcesContent":["import React from 'react'\r\n\r\nfunction Header() {\r\n  return (\r\n    <div>header</div>\r\n  )\r\n}\r\n\r\nexport default Header"],"names":[],"mappings":";;;;;AAEA,SAAS;IACP,qBACE,6LAAC;kBAAI;;;;;;AAET;KAJS;uCAMM","debugId":null}},
+    {"offset": {"line": 34, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/zubba/OneDrive/projects/ai-pdf-note-taker/app/dashboard/layout.tsx"],"sourcesContent":["\"use client\"\r\nimport React from 'react'\r\nimport Header from './_components/header'\r\nimport Sidebar from './_components/sidebar'\r\nfunction DashboardLayout(\r\n    {children}\r\n    : {\r\n        children: React.ReactNode;\r\n    }\r\n) {\r\n  return (\r\n    <div>\r\n        <Header />\r\n        {children}\r\n    </div>\r\n  )\r\n}\r\n\r\nexport default DashboardLayout"],"names":[],"mappings":";;;;AAEA;AAFA;;;AAIA,SAAS,gBACL,EAAC,QAAQ,EAGR;IAEH,qBACE,6LAAC;;0BACG,6LAAC,6IAAA,CAAA,UAAM;;;;;YACN;;;;;;;AAGT;KAZS;uCAcM","debugId":null}}]
+}

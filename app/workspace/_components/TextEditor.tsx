@@ -1,16 +1,24 @@
 import React from 'react'
-import { useEditor,  } from '@tiptap/react'
+import { useEditor } from '@tiptap/react'
+import TextAlign from '@tiptap/extension-text-align'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder';
 import { EditorContent } from '@tiptap/react'
 import EditorExtension from './EditorExtension';
+import Underline from '@tiptap/extension-underline'
+import TextStyle from '@tiptap/extension-text-style'
 
 function TextEditor() {
     const editor = useEditor({
         extensions: [StarterKit,
             Placeholder.configure({
                 placeholder: 'Start Creating New Notes...',
-              }), 
+              }),
+              Underline,
+              TextAlign.configure({
+                types: ['heading', 'paragraph', ], // Enable text alignment for these node types
+              }),
+              TextStyle.configure({ mergeNestedSpanStyles: true }),
         ],
         content: '',
         editorProps: {

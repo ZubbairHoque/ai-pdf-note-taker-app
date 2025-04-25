@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.12.5",
+    "@floating-ui/react": "^0.27.8",
     "@google/generative-ai": "^0.24.0",
     "@iconify/react": "^5.2.0",
     "@langchain/community": "^0.3.38",
@@ -24,6 +25,8 @@
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
     "@tiptap/extension-placeholder": "^2.11.7",
+    "@tiptap/extension-text-align": "^2.11.7",
+    "@tiptap/extension-text-style": "^2.11.7",
     "@tiptap/extension-underline": "^2.11.7",
     "@tiptap/pm": "^2.11.7",
     "@tiptap/react": "^2.11.7",
@@ -52,6 +55,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/uuid": "^10.0.0",
+    "sass": "^1.87.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

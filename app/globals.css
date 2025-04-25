@@ -135,6 +135,9 @@ body {
   color: var(--color-sidebar-foreground, #ffffff); /* White text */
 }
 
+/* Removed JavaScript code. Move it to a JavaScript file. */
+
+
 .main-content {
   margin-left: 16rem; /* Match the width of the sidebar */
   flex: 1;

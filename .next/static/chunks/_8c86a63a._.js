@@ -133,8 +133,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$align$2d$left$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlignLeft$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/align-left.js [app-client] (ecmascript) <export default as AlignLeft>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$align$2d$center$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlignCenter$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/align-center.js [app-client] (ecmascript) <export default as AlignCenter>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$align$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlignRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/align-right.js [app-client] (ecmascript) <export default as AlignRight>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$heading$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Heading$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/heading.js [app-client] (ecmascript) <export default as Heading>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$align$2d$justify$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlignJustify$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/align-justify.js [app-client] (ecmascript) <export default as AlignJustify>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$code$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Code$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/code.js [app-client] (ecmascript) <export default as Code>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$list$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__List$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/list.js [app-client] (ecmascript) <export default as List>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$text$2d$quote$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TextQuote$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/text-quote.js [app-client] (ecmascript) <export default as TextQuote>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$highlighter$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Highlighter$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/highlighter.js [app-client] (ecmascript) <export default as Highlighter>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$strikethrough$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Strikethrough$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/strikethrough.js [app-client] (ecmascript) <export default as Strikethrough>");
 ;
 ;
 function EditorExtension({ editor }) {
@@ -148,12 +152,12 @@ function EditorExtension({ editor }) {
                     className: "w-5 h-5 text-black"
                 }, void 0, false, {
                     fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                    lineNumber: 14,
+                    lineNumber: 28,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                lineNumber: 10,
+                lineNumber: 24,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -163,12 +167,12 @@ function EditorExtension({ editor }) {
                     className: "w-5 h-5 text-black"
                 }, void 0, false, {
                     fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                    lineNumber: 22,
+                    lineNumber: 36,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                lineNumber: 18,
+                lineNumber: 32,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -179,12 +183,12 @@ function EditorExtension({ editor }) {
                     children: "U"
                 }, void 0, false, {
                     fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                    lineNumber: 30,
+                    lineNumber: 44,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                lineNumber: 26,
+                lineNumber: 40,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -196,12 +200,12 @@ function EditorExtension({ editor }) {
                     className: "w-5 h-5 text-black"
                 }, void 0, false, {
                     fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                    lineNumber: 40,
+                    lineNumber: 52,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                lineNumber: 34,
+                lineNumber: 48,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -213,12 +217,12 @@ function EditorExtension({ editor }) {
                     className: "w-5 h-5 text-black"
                 }, void 0, false, {
                     fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                    lineNumber: 50,
+                    lineNumber: 60,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                lineNumber: 44,
+                lineNumber: 56,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -230,12 +234,12 @@ function EditorExtension({ editor }) {
                     className: "w-5 h-5 text-black"
                 }, void 0, false, {
                     fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                    lineNumber: 60,
+                    lineNumber: 68,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                lineNumber: 54,
+                lineNumber: 64,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -247,93 +251,83 @@ function EditorExtension({ editor }) {
                     className: "w-5 h-5 text-black"
                 }, void 0, false, {
                     fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                    lineNumber: 70,
+                    lineNumber: 76,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                lineNumber: 64,
-                columnNumber: 9
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                type: "number",
-                min: "2",
-                max: "40",
-                step: "1",
-                list: "fontSizes",
-                onChange: (e)=>{
-                    const fontSize = Number(e.target.value);
-                    if (fontSize >= 2 && fontSize <= 40) {
-                        editor.chain().focus().setMark("textStyle", {
-                            fontSize: `${fontSize}px`
-                        }).run();
-                    }
-                },
-                className: "p-2 border border-black rounded w-20",
-                placeholder: "Font Size"
-            }, void 0, false, {
-                fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                lineNumber: 74,
-                columnNumber: 9
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("datalist", {
-                id: "fontSizes",
-                children: [
-                    Array.from({
-                        length: 9
-                    }, (_, i)=>8 + i * 2).map((size)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                            value: size,
-                            children: [
-                                size,
-                                "px"
-                            ]
-                        }, size, true, {
-                            fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                            lineNumber: 92,
-                            columnNumber: 13
-                        }, this)),
-                    Array.from({
-                        length: 2
-                    }, (_, i)=>28 + i * 4).map((size)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                            value: size,
-                            children: [
-                                size,
-                                "px"
-                            ]
-                        }, size, true, {
-                            fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                            lineNumber: 98,
-                            columnNumber: 13
-                        }, this))
-                ]
-            }, void 0, true, {
-                fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                lineNumber: 89,
+                lineNumber: 72,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                onClick: ()=>editor.chain().focus().toggleHeading({
-                        level: 1
-                    }).run(),
-                className: `p-2 border border-black rounded ${editor.isActive("heading", {
-                    level: 1
-                }) ? "bg-gray-200" : ""}`,
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$heading$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Heading$3e$__["Heading"], {
-                    className: "w-5 h-5 text-black"
-                }, void 0, false, {
+                onClick: ()=>editor.chain().focus().toggleCode().run(),
+                className: editor.isActive("code") ? "text-blue-500" : "",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$code$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Code$3e$__["Code"], {}, void 0, false, {
                     fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                    lineNumber: 111,
+                    lineNumber: 83,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-                lineNumber: 105,
+                lineNumber: 79,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                onClick: ()=>editor.chain().focus().toggleBulletList().run(),
+                className: editor.isActive("bulletList") ? "text-blue-500" : "",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$list$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__List$3e$__["List"], {}, void 0, false, {
+                    fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
+                    lineNumber: 89,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
+                lineNumber: 85,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                onClick: ()=>editor.chain().focus().toggleBlockquote().run(),
+                className: editor.isActive("blockquote") ? "text-blue-500" : "",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$text$2d$quote$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TextQuote$3e$__["TextQuote"], {}, void 0, false, {
+                    fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
+                    lineNumber: 95,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
+                lineNumber: 91,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                onClick: ()=>editor.chain().focus()?.toggleHighlight().run(),
+                className: editor.isActive("highlight") ? "text-blue-500" : "",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$highlighter$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Highlighter$3e$__["Highlighter"], {}, void 0, false, {
+                    fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
+                    lineNumber: 101,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
+                lineNumber: 97,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                onClick: ()=>editor.chain().focus().toggleStrike().run(),
+                className: editor.isActive("strike") ? "text-blue-500" : "",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$strikethrough$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Strikethrough$3e$__["Strikethrough"], {}, void 0, false, {
+                    fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
+                    lineNumber: 107,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
+                lineNumber: 103,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/workspace/_components/EditorExtension.tsx",
-        lineNumber: 8,
+        lineNumber: 22,
         columnNumber: 7
     }, this);
 }
@@ -361,8 +355,10 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tiptap$2f$
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$workspace$2f$_components$2f$EditorExtension$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/workspace/_components/EditorExtension.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tiptap$2f$extension$2d$underline$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@tiptap/extension-underline/dist/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tiptap$2f$extension$2d$text$2d$style$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@tiptap/extension-text-style/dist/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tiptap$2f$extension$2d$text$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@tiptap/extension-text/dist/index.js [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
+;
 ;
 ;
 ;
@@ -386,6 +382,7 @@ function TextEditor() {
                     'paragraph'
                 ]
             }),
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tiptap$2f$extension$2d$text$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tiptap$2f$extension$2d$text$2d$style$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].configure({
                 mergeNestedSpanStyles: true
             })
@@ -403,27 +400,27 @@ function TextEditor() {
                 editor: editor
             }, void 0, false, {
                 fileName: "[project]/app/workspace/_components/TextEditor.tsx",
-                lineNumber: 32,
-                columnNumber: 9
+                lineNumber: 36,
+                columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tiptap$2f$react$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["EditorContent"], {
                     editor: editor
                 }, void 0, false, {
                     fileName: "[project]/app/workspace/_components/TextEditor.tsx",
-                    lineNumber: 34,
-                    columnNumber: 9
+                    lineNumber: 38,
+                    columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/workspace/_components/TextEditor.tsx",
-                lineNumber: 33,
-                columnNumber: 9
+                lineNumber: 37,
+                columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/workspace/_components/TextEditor.tsx",
-        lineNumber: 31,
-        columnNumber: 5
+        lineNumber: 35,
+        columnNumber: 9
     }, this);
 }
 _s(TextEditor, "t0rsU/t1p+LiVrRpHUSgNnV9Lz4=", false, function() {

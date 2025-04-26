@@ -6,7 +6,7 @@
   "static/chunks/node_modules_prosemirror-view_dist_index_212d9a9b.js",
   "static/chunks/node_modules_@tiptap_core_dist_index_bbf02861.js",
   "static/chunks/node_modules_@popperjs_core_lib_e7041586._.js",
-  "static/chunks/node_modules_f85a1f8e._.js",
+  "static/chunks/node_modules_fc165fef._.js",
   "static/chunks/_8c86a63a._.js"
 ],
     source: "dynamic"

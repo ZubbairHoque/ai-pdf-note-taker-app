@@ -7,34 +7,38 @@ import { EditorContent } from '@tiptap/react'
 import EditorExtension from './EditorExtension';
 import Underline from '@tiptap/extension-underline'
 import TextStyle from '@tiptap/extension-text-style'
+import Text from '@tiptap/extension-text'
 
 function TextEditor() {
     const editor = useEditor({
-        extensions: [StarterKit,
+        extensions: [
+            StarterKit,
             Placeholder.configure({
                 placeholder: 'Start Creating New Notes...',
-              }),
-              Underline,
-              TextAlign.configure({
-                types: ['heading', 'paragraph', ], // Enable text alignment for these node types
-              }),
-              TextStyle.configure({ mergeNestedSpanStyles: true }),
+            }),
+            Underline,
+            TextAlign.configure({
+                types: ['heading', 'paragraph'], // Enable text alignment for these node types
+            }),
+            Text,
+            TextStyle.configure({ mergeNestedSpanStyles: true }),
         ],
         content: '',
         editorProps: {
             attributes: {
                 class: "focus:outline-none h-screen p-5",
-              },
-          },    
-      })
-  return (
-    <div>
-        <EditorExtension editor={editor} />
+            },
+        },
+    })
+
+    return (
         <div>
-        <EditorContent editor={editor} />
+            <EditorExtension editor={editor} />
+            <div>
+                <EditorContent editor={editor} />
+            </div>
         </div>
-    </div>
-  )
+    )
 }
 
 export default TextEditor

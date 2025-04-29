@@ -8,6 +8,7 @@ import EditorExtension from './EditorExtension';
 import Underline from '@tiptap/extension-underline'
 import TextStyle from '@tiptap/extension-text-style'
 import Text from '@tiptap/extension-text'
+import Highlight from '@tiptap/extension-highlight'
 
 function TextEditor() {
     const editor = useEditor({
@@ -22,6 +23,7 @@ function TextEditor() {
             }),
             Text,
             TextStyle.configure({ mergeNestedSpanStyles: true }),
+            Highlight.configure({ multicolor: true }),
         ],
         content: '',
         editorProps: {

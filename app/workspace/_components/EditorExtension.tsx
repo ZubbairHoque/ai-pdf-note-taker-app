@@ -40,6 +40,8 @@ function EditorExtension({ editor }: { editor: Editor | null }) {
     });
 
     const UnformattedAns = JSON.parse(result as string);
+    console.log("Unformatted Answer:", UnformattedAns); // Debugging: Log the unformatted answer
+
     let AllUnformattedAns=" ";
     UnformattedAns&&UnformattedAns.forEach((item: any) => {
       AllUnformattedAns=AllUnformattedAns+item.pageContent

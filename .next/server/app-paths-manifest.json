@@ -1,4 +1,5 @@
 {
+  "/api/pdf-loader/route": "app/api/pdf-loader/route.js",
   "/dashboard/page": "app/dashboard/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/workspace/[fileID]/page": "app/workspace/[fileID]/page.js"

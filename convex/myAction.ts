@@ -34,23 +34,22 @@ export const search = action({
     fileID: v.string(),
   },
   handler: async (ctx, args) => {
-    const vectorStore = new ConvexVectorStore( 
+    const vectorStore = new ConvexVectorStore(
       new GoogleGenerativeAIEmbeddings({
-      apiKey: process.env.GOOGLE_API_KEY,
-      model: "text-embedding-004", // 768 dimensions
-      taskType: TaskType.RETRIEVAL_DOCUMENT,
-      title: "Document title",
-    })
-      
-      , { ctx });
+        apiKey: process.env.GOOGLE_API_KEY,
+        model: "text-embedding-004", // 768 dimensions
+        taskType: TaskType.RETRIEVAL_DOCUMENT,
+        title: "Document title",
+      }),
+      { ctx }
+    );
 
-    console.log(args.fileID);
+    console.log(args.fileID); // Debugging: Log the fileID
     const resultOne = (
       await vectorStore.similaritySearch(args.query, 1)
-    )
-      .filter (q => q.metadata.fileID === args.fileID)
-    console.log(resultOne);
+    ).filter((q) => q.metadata.fileID === args.fileID); // Ensure filtering by fileID
 
+    console.log(resultOne); // Debugging: Log the search results
     return JSON.stringify(resultOne);
   },
 });

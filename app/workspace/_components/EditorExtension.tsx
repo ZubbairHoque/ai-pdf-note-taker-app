@@ -20,7 +20,7 @@ import {
 import { useAction } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
-import { GoogleGenAI } from "@google/genai";
+import { chatSession } from "@/configs/AIModels";
 
 function EditorExtension({ editor }: { editor: Editor | null }) {
 
@@ -45,45 +45,11 @@ function EditorExtension({ editor }: { editor: Editor | null }) {
       AllUnformattedAns=AllUnformattedAns+item.pageContent
     });
 
-    const PROMPT =
-    "For question: " +
-    selectedText +
-    " And with the given content as answer: " +
-    " Please provide an appropriate answer in HTML format. The answer content is: " +
-    AllUnformattedAns;
-
-  // Use Gemini to format the answer
-  const ai = new GoogleGenAI({});
-  const config = {
-    responseMimeType: "text/plain",
-  };
-  const model = "gemini-1.5-flash";
-  const contents = [
-    {
-      role: "user",
-      parts: [
-        {
-          text: PROMPT,
-        },
-      ],
-    },
-  ];
-
-  const response = await ai.models.generateContentStream({
-    model,
-    config,
-    contents,
-  });
-
-  let formattedAnswer = "";
-  for await (const chunk of response) {
-    formattedAnswer += chunk.text;
-  }
-  
-  console.log("Formatted Answer:", formattedAnswer);
-
-  // Optionally, insert the formatted answer into the editor
-  editor?.commands.insertContent(formattedAnswer);
+    const PROMPT = "For question :" + selectedText + " and with the given content as answer," +
+            " please give appropriate answer in HTML format and mark highlights lines. The answer content is: " + AllUnformattedAns;
+        
+        const AiModelResult = await chatSession.sendMessage (PROMPT);
+        console.log (AiModelResult.response.text ());
 };
 
   return (

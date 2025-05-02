@@ -29,7 +29,7 @@ function UploadPdfDialogue() {
   };
 
   const handleChooseFile = () => {
-    document.getElementById("fileInput")?.click(); // Programmatically trigger the file input
+    fileInputRef.current?.click(); // Trigger the file input using the ref
   };
 
   const handleClose = () => {
@@ -39,59 +39,59 @@ function UploadPdfDialogue() {
   };
 
   const OnUpload = async () => {
-    setLoading(true); // Set loading to true when the upload starts
-
-    // Step 1: Get short-lived upload URL
-    const postUrl = await generateUploadUrl();
-
-    // Step 2: POST the file to the URL
-    const file = fileInputRef.current?.files?.[0];
+    const file = fileInputRef.current?.files?.[0]; // Access the selected file
     if (!file) {
       console.error("No file selected");
-      setLoading(false); // Stop loading if no file is selected
+      alert("Please select a file before uploading.");
       return;
     }
 
-    const result = await fetch(postUrl, {
-      method: "POST",
-      headers: { "Content-Type": file.type },
-      body: file,
-    });
+    console.log("Selected File:", file.name); // Debugging: Log the selected file name
 
-    const { storageId } = await result.json();
-    console.log("storageId", storageId);
+    try {
+      setLoading(true); // Set loading to true when the upload starts
 
-    // creates a file ID
-    const fileID = uuidv4();
+      // Step 1: Get short-lived upload URL
+      const postUrl = await generateUploadUrl();
 
-    // Generate public URL using the storage ID
-    const fileUrl = await getFileUrl({ storage: storageId });
+      // Step 2: POST the file to the URL
+      const result = await fetch(postUrl, {
+        method: "POST",
+        headers: { "Content-Type": file.type },
+        body: file,
+      });
 
-    // Step 3: Save the newly allocated storage ID to the database
-    const response = await savePdfFile({
-      fileID: fileID,
-      fileName: customFileName ?? "Untitled",
-      storageId: storageId,
-      fiLeUrl: fileUrl ?? "",
-      createdBy: user?.primaryEmailAddress?.emailAddress ?? "unknown",
-    });
+      const { storageId } = await result.json();
+      console.log("storageId", storageId);
 
-    console.log(response);
+      // Step 3: Save the file metadata to the database
+      const fileID = uuidv4();
+      const fileUrl = await getFileUrl({ storage: storageId });
 
-    //API Call to fetch the pdf loader
-    const ApiRes = await Axios.get(`/api/pdf-loader?pdfUrl=${fileUrl}`);
-    console.log(ApiRes.data.result);
-    setFileName("No file chosen");
-    setCustomFileName("");
+      await savePdfFile({
+        fileID: fileID,
+        fileName: customFileName ?? "Untitled",
+        storageId: storageId,
+        fiLeUrl: fileUrl ?? "",
+        createdBy: user?.primaryEmailAddress?.emailAddress ?? "unknown",
+      });
 
-    await embeddDocument({
-      splitText: ApiRes.data.result,
-      fileID: fileID,
-    });
-    setLoading(false); // Set loading to false when the upload completes or fails
-    setOpen(false); // Close the dialog after successful upload
+      console.log("File uploaded successfully");
+
+      // Reset the file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      setFileName("No file chosen");
+      setCustomFileName("");
+      setOpen(false); // Close the dialog
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      alert("Failed to upload the file. Please try again.");
+    } finally {
+      setLoading(false); // Set loading to false when the upload completes or fails
+    }
   };
-
 
   return (
     <>
@@ -123,11 +123,12 @@ function UploadPdfDialogue() {
               <div className="flex items-center gap-4">
                 {/* Hidden File Input */}
                 <input
-                  id="fileInput"
+                  id="fileInput" // Add an ID to the file input
                   type="file"
-                  className="hidden"
+                  ref={fileInputRef} // Connect the ref to the input
                   accept=".pdf"
-                  onChange={handleFileChange}
+                  onChange={handleFileChange} // Handle file selection
+                  style={{ display: "none" }} // Hide the input
                 />
 
                 {/* Custom Choose File Button */}

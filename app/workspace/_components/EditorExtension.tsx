@@ -43,7 +43,7 @@ function EditorExtension({ editor }: { editor: Editor | null }) {
     console.log("Unformatted Answer:", UnformattedAns); // Debugging: Log the unformatted answer
 
     let AllUnformattedAns=" ";
-    UnformattedAns&&UnformattedAns.forEach((item: any) => {
+    UnformattedAns&&UnformattedAns.forEach((item : any) => {
       AllUnformattedAns=AllUnformattedAns+item.pageContent
     });
 
@@ -52,6 +52,8 @@ function EditorExtension({ editor }: { editor: Editor | null }) {
         
         const AiModelResult = await chatSession.sendMessage (PROMPT);
         console.log (AiModelResult.response.text ());
+
+        const AllText = editor?.getHTML('<P></>');
 };
 
   return (

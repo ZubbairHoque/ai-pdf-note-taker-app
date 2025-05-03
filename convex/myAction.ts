@@ -14,7 +14,7 @@ export const ingest = action({
       args.splitText, // array
       { id: args.fileID }, // object wrapping the string
       new GoogleGenerativeAIEmbeddings({
-        apiKey: process.env.GOOGLE_API_KEY,
+        apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
         model: "text-embedding-004", // 768 dimensions
         taskType: TaskType.RETRIEVAL_DOCUMENT,
         title: "Document title",
@@ -36,7 +36,7 @@ export const search = action({
   handler: async (ctx, args) => {
     const vectorStore = new ConvexVectorStore(
       new GoogleGenerativeAIEmbeddings({
-        apiKey: process.env.GOOGLE_API_KEY,
+        apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
         model: "text-embedding-004", // 768 dimensions
         taskType: TaskType.RETRIEVAL_DOCUMENT,
         title: "Document title",
@@ -47,7 +47,7 @@ export const search = action({
     console.log(args.fileID); // Debugging: Log the fileID
     const resultOne = (
       await vectorStore.similaritySearch(args.query, 1)
-    ).filter((q) => q.metadata.fileID === args.fileID); // Ensure filtering by fileID
+    ).filter(q => q.metadata.fileID ==args.fileID); // Ensure filtering by fileID
 
     console.log(resultOne); // Debugging: Log the search results
     return JSON.stringify(resultOne);

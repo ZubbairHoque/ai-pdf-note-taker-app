@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useEffect}from 'react'
 import { useEditor } from '@tiptap/react'
 import TextAlign from '@tiptap/extension-text-align'
 import StarterKit from '@tiptap/starter-kit'
@@ -10,7 +10,10 @@ import TextStyle from '@tiptap/extension-text-style'
 import Text from '@tiptap/extension-text'
 import Highlight from '@tiptap/extension-highlight'
 
+
 function TextEditor() {
+    
+
     const editor = useEditor({
         extensions: [
             StarterKit,

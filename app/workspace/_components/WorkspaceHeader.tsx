@@ -2,7 +2,7 @@ import { UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
 import React from 'react'
 
-function WorkspaceHeader() {
+function WorkspaceHeader({fileName} : {fileName: string}) {
   return (
     <div className='p-4 flex justify-between shadow-md'>
         <Image 
@@ -12,6 +12,8 @@ function WorkspaceHeader() {
         height={40}  
         className="  border-5 border-black p-2 rounded-lg shadow-sm"
         />
+
+        <h2>{fileName}</h2>
         
         <UserButton />
     </div>

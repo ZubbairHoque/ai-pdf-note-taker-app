@@ -5,6 +5,8 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import Provider from "./provider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/sonner";
+
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
@@ -37,6 +39,7 @@ export default function RootLayout({
           </div>
         </div>
       </Provider>
+      <Toaster />
       </body>
     </html>
   </ClerkProvider>

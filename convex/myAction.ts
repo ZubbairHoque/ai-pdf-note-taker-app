@@ -7,12 +7,12 @@ import { v } from "convex/values";
 export const ingest = action({
   args: {
     splitText: v.array(v.string()),
-    fileId: v.string(),
+    fileID: v.string(),
   },
   handler: async (ctx, args) => {
     await ConvexVectorStore.fromTexts(
       args.splitText,
-      args.splitText.map(() => ({ fileId: args.fileId })),
+      args.splitText.map(() => ({ fileID: args.fileID })),
       new GoogleGenerativeAIEmbeddings({
         apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
         model: "text-embedding-004", // 768 dimensions
@@ -30,16 +30,30 @@ export const search = action({
     fileID: v.string()
   },
   handler: async (ctx, args) => {
-    const vectorStore = new ConvexVectorStore(new GoogleGenerativeAIEmbeddings({
-      apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
-      model: "text-embedding-004", 
-      taskType: TaskType.RETRIEVAL_DOCUMENT,
-      title: "Document title",
-    }), { ctx });
+    try {
+      // Validate inputs
+      if (!args.query || args.query.trim() === "") {
+        return JSON.stringify([]);
+      }
 
-    const results = await vectorStore.similaritySearch(args.query, 3);
-    const filteredResults = results.filter(result => result.metadata.fileID === args.fileID);
-    return JSON.stringify(filteredResults);
+      const vectorStore = new ConvexVectorStore(new GoogleGenerativeAIEmbeddings({
+        apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
+        model: "text-embedding-004", 
+        taskType: TaskType.RETRIEVAL_DOCUMENT,
+        title: "Document title",
+      }), { ctx });
+
+      // Increase the number of results to improve chances of finding relevant content
+      const results = await vectorStore.similaritySearch(args.query, 5);
+      
+      // Filter results by fileID
+      const filteredResults = results.filter(result => result.metadata.fileID === args.fileID);
+      
+      return JSON.stringify(filteredResults);
+    } catch (error) {
+      console.error("Error in search function:", error);
+      throw new Error("Failed to search document: " + (error instanceof Error ? error.message : String(error)));
+    }
   },
 });
 

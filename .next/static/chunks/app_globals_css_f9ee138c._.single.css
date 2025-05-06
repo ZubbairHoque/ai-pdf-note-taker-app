@@ -415,6 +415,10 @@
     height: calc(var(--spacing) * 10);
   }
 
+  .h-\[88vh\] {
+    height: 88vh;
+  }
+
   .h-\[90vh\] {
     height: 90vh;
   }
@@ -552,6 +556,10 @@
 
   .overflow-hidden {
     overflow: hidden;
+  }
+
+  .overflow-scroll {
+    overflow: scroll;
   }
 
   .rounded {

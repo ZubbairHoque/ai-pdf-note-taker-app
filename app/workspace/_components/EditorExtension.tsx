@@ -27,48 +27,37 @@ function EditorExtension({ editor }: { editor: Editor | null }) {
 
   const {fileID} = useParams() as {fileID:string};
   const SearchAI = useAction(api.myAction.search);
-  const onAiClick = async() => {
+  const onAiClick = async () => {
     try {
       toast("Processing your request...");
 
-      // Get selected text
-      const selectedText = editor?.state.doc.textBetween(
-        editor.state.selection.from,
-        editor.state.selection.to,
-        " "
-      );
-      
-      // Validate selected text
-      if (!selectedText || selectedText.trim() === "") {
-        toast.error("Please select some text to search for");
-        return;
-      }
-      
-      console.log("Selected text:", selectedText);
+      const selectedText =
+        editor?.state.doc.textBetween(
+          editor.state.selection.from,
+          editor.state.selection.to,
+          " "
+        ) || "What is this document about?";
 
-      // Search for relevant content in the PDF
+      console.log("Selected text or default question:", selectedText);
+
       const result = await SearchAI({
-        query: selectedText as string,
+        query: selectedText,
         fileID: fileID,
       });
 
-      // Parse the search results
       const searchResults = JSON.parse(result as string);
       console.log("Search results:", searchResults);
 
-      // Check if we got any results
       if (!searchResults || searchResults.length === 0) {
-        toast.error("No relevant information found in the document");
+        toast.error("No relevant information found in the document.");
         return;
       }
 
-      // Combine all the content from search results
       let combinedContent = "";
       searchResults.forEach((item: { pageContent: string }) => {
         combinedContent += item.pageContent + " ";
       });
 
-      // Create a more structured prompt for the AI
       const prompt = `
 I need you to answer this question: "${selectedText}"
 
@@ -79,30 +68,26 @@ Please provide a clear, concise answer based only on the information provided ab
 Format your response in HTML with important points highlighted.
 Do not include markdown code blocks or HTML tags in your response.
 `;
-      
-      // Send the prompt to the AI model
+
       const aiResponse = await chatSession.sendMessage(prompt);
-      
-      // Get the response text
       let formattedAnswer = aiResponse.response.text();
-      
-      // Clean up the response (remove any markdown code blocks if present)
+
       formattedAnswer = formattedAnswer
-        .replace(/```html/g, '')
-        .replace(/```/g, '')
+        .replace(/```html/g, "")
+        .replace(/```/g, "")
         .trim();
-      
-      // Add the answer to the editor
+
       const currentContent = editor?.getHTML() || "";
-      editor?.commands.setContent(currentContent + `<p><strong>Answer: </strong>${formattedAnswer}</p>`);
-      
+      editor?.commands.setContent(
+        currentContent + `<p><strong>Answer: </strong>${formattedAnswer}</p>`
+      );
+
       toast.success("Answer generated successfully");
     } catch (error) {
       console.error("Error in AI processing:", error);
-      toast.error("An error occurred while processing your request");
+      toast.error("An error occurred while processing your request.");
     }
-}
-        
+  };
 
   return (
     editor && (

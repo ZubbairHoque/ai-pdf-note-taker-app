@@ -10,12 +10,15 @@ export const ingest = action({
     fileID: v.string(),
   },
   handler: async (ctx, args) => {
+    console.log("Ingesting Text:", args.splitText);
+    console.log("File ID:", args.fileID);
+
     await ConvexVectorStore.fromTexts(
       args.splitText,
-      args.splitText.map(() => ({ fileID: args.fileID })),
+      args.splitText.map(() => ({ fileID: args.fileID })), // Use fileID as the metadata key
       new GoogleGenerativeAIEmbeddings({
         apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
-        model: "text-embedding-004", // 768 dimensions
+        model: "text-embedding-004",
         taskType: TaskType.RETRIEVAL_DOCUMENT,
         title: "Document title",
       }),
@@ -27,33 +30,31 @@ export const ingest = action({
 export const search = action({
   args: {
     query: v.string(),
-    fileID: v.string()
+    fileID: v.string(),
   },
   handler: async (ctx, args) => {
-    try {
-      // Validate inputs
-      if (!args.query || args.query.trim() === "") {
-        return JSON.stringify([]);
-      }
+    console.log("Search Query:", args.query);
+    console.log("File ID:", args.fileID);
 
-      const vectorStore = new ConvexVectorStore(new GoogleGenerativeAIEmbeddings({
+    const vectorStore = new ConvexVectorStore(
+      new GoogleGenerativeAIEmbeddings({
         apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
-        model: "text-embedding-004", 
+        model: "text-embedding-004",
         taskType: TaskType.RETRIEVAL_DOCUMENT,
         title: "Document title",
-      }), { ctx });
+      }),
+      { ctx }
+    );
 
-      // Increase the number of results to improve chances of finding relevant content
-      const results = await vectorStore.similaritySearch(args.query, 5);
-      
-      // Filter results by fileID
-      const filteredResults = results.filter(result => result.metadata.fileID === args.fileID);
-      
-      return JSON.stringify(filteredResults);
-    } catch (error) {
-      console.error("Error in search function:", error);
-      throw new Error("Failed to search document: " + (error instanceof Error ? error.message : String(error)));
-    }
+    const results = await vectorStore.similaritySearch(args.query, 5);
+    console.log("Raw Results:", results);
+
+    const filteredResults = results.filter(
+      (result) => result.metadata.fileID === args.fileID
+    );
+    console.log("Filtered Results:", filteredResults);
+
+    return JSON.stringify(filteredResults);
   },
 });
 

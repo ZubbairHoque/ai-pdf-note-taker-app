@@ -7,6 +7,7 @@ import { useUser } from "@clerk/nextjs";
 import { useAction, useMutation } from "convex/react";
 import { v4 as uuidv4 } from "uuid";
 import Axios from "axios";
+import { console } from 'inspector'
 
 function UploadPdfDialogue() {
   const generateUploadUrl = useMutation(api.fileStorage.generateUploadUrl);
@@ -51,6 +52,9 @@ function UploadPdfDialogue() {
     try {
       setLoading(true); // Set loading to true when the upload starts
 
+      // Declare fileID at the top of the function
+      const fileID = uuidv4();
+
       // Step 1: Get short-lived upload URL
       const postUrl = await generateUploadUrl();
 
@@ -65,7 +69,6 @@ function UploadPdfDialogue() {
       console.log("storageId", storageId);
 
       // Step 3: Save the file metadata to the database
-      const fileID = uuidv4();
       const fileUrl = await getFileUrl({ storage: storageId });
 
       await savePdfFile({
@@ -75,6 +78,8 @@ function UploadPdfDialogue() {
         fiLeUrl: fileUrl ?? "",
         createdBy: user?.primaryEmailAddress?.emailAddress ?? "unknown",
       });
+
+      // Use fileID in subsequent code
 
       console.log("File uploaded successfully");
 
@@ -91,6 +96,13 @@ function UploadPdfDialogue() {
     } finally {
       setLoading(false); // Set loading to false when the upload completes or fails
     }
+
+    const ApiResult = await Axios.get('api/pdf-loader')
+    console.log(ApiResult.data.result)
+    embeddDocument({
+      splitText: ApiResult.data.result,
+      fileID: fileID,
+    });
   };
 
   return (

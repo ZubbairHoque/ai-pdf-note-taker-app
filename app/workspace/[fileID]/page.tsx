@@ -11,18 +11,18 @@ function Workspace() {
   const { fileID } = useParams()
 
   // get the file info from the Convex using the fileID
-  const fileInfo = useQuery(api.fileStorage.GetFileRecord,{
+  const GetFileRecord = useQuery(api.fileStorage.GetFileRecord,{
     fileID: fileID as string || ''
   })
 
   useEffect(() => {
-    console.log(fileInfo)
-  },[fileInfo])
+    console.log(GetFileRecord)
+  },[GetFileRecord])
     
     
   return (
     <div>
-      <WorkspaceHeader fileName = {fileInfo?.[0]?.fileName || ''} />
+      <WorkspaceHeader fileName = {GetFileRecord?.[0]?.fileName || ''} />
 
       <div className='grid grid-cols-2 gap-5'>
         <div>
@@ -31,7 +31,7 @@ function Workspace() {
         </div>
         <div>
           {/* PDF Viewer */}
-          <PdfViewer fileUrl={fileInfo?.[0]?.fileUrl || ''} />
+          <PdfViewer fileUrl={GetFileRecord?.[0]?.fileUrl || ''} />
         </div>
       </div>
     </div>

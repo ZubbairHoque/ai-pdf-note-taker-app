@@ -7,7 +7,6 @@ import { useUser } from "@clerk/nextjs";
 import { useAction, useMutation } from "convex/react";
 import { v4 as uuidv4 } from "uuid";
 import Axios from "axios";
-import { console } from 'inspector'
 
 function UploadPdfDialogue() {
   const generateUploadUrl = useMutation(api.fileStorage.generateUploadUrl);
@@ -83,6 +82,14 @@ function UploadPdfDialogue() {
 
       console.log("File uploaded successfully");
 
+      const ApiResult = await Axios.get('api/pdf-loader?pdfUrl=' + fileUrl)
+      console.log(ApiResult.data.result)
+      await embeddDocument({
+        splitText: ApiResult.data.result,
+        fileID: fileID,
+      });
+      
+
       // Reset the file input
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
@@ -97,12 +104,8 @@ function UploadPdfDialogue() {
       setLoading(false); // Set loading to false when the upload completes or fails
     }
 
-    const ApiResult = await Axios.get('api/pdf-loader')
-    console.log(ApiResult.data.result)
-    embeddDocument({
-      splitText: ApiResult.data.result,
-      fileID: fileID,
-    });
+
+   
   };
 
   return (

@@ -10,15 +10,12 @@ export const ingest = action({
     fileID: v.string(),
   },
   handler: async (ctx, args) => {
-    console.log("Ingesting Text:", args.splitText);
-    console.log("File ID:", args.fileID);
-
     await ConvexVectorStore.fromTexts(
       args.splitText,
-      args.splitText.map(() => ({ fileID: args.fileID })), // Use fileID as the metadata key
+      args.splitText.map(() => ({ fileID: args.fileID})),
       new GoogleGenerativeAIEmbeddings({
         apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
-        model: "text-embedding-004",
+        model: "text-embedding-004", // 768 dimensions
         taskType: TaskType.RETRIEVAL_DOCUMENT,
         title: "Document title",
       }),
@@ -30,30 +27,18 @@ export const ingest = action({
 export const search = action({
   args: {
     query: v.string(),
-    fileID: v.string(),
+    fileID: v.string()
   },
   handler: async (ctx, args) => {
-    console.log("Search Query:", args.query);
-    console.log("File ID:", args.fileID);
+    const vectorStore = new ConvexVectorStore(new GoogleGenerativeAIEmbeddings({
+      apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
+      model: "text-embedding-004", 
+      taskType: TaskType.RETRIEVAL_DOCUMENT,
+      title: "Document title",
+    }), { ctx });
 
-    const vectorStore = new ConvexVectorStore(
-      new GoogleGenerativeAIEmbeddings({
-        apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
-        model: "text-embedding-004",
-        taskType: TaskType.RETRIEVAL_DOCUMENT,
-        title: "Document title",
-      }),
-      { ctx }
-    );
-
-    const results = await vectorStore.similaritySearch(args.query, 5);
-    console.log("Raw Results:", results);
-
-    const filteredResults = results.filter(
-      (result) => result.metadata.fileID === args.fileID
-    );
-    console.log("Filtered Results:", filteredResults);
-
+    const results = await vectorStore.similaritySearch(args.query, 3);
+    const filteredResults = results.filter(Result => Result.metadata.fileID === args.fileID);
     return JSON.stringify(filteredResults);
   },
 });

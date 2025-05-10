@@ -8,7 +8,12 @@ import { useAction, useMutation } from "convex/react";
 import { v4 as uuidv4 } from "uuid";
 import Axios from "axios";
 
-function UploadPdfDialogue() {
+// Define the UploadPdfDialogueProps type
+interface UploadPdfDialogueProps {
+  children?: React.ReactNode;
+}
+
+function UploadPdfDialogue({ children }: UploadPdfDialogueProps) {
   const generateUploadUrl = useMutation(api.fileStorage.generateUploadUrl);
   const savePdfFile = useMutation(api.fileStorage.savePdfFile);
   const { user } = useUser();

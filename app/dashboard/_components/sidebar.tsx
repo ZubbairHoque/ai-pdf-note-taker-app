@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
-import React from "react";
+import React, { Children } from "react";
 import UploadPdfDialogue from "./UploadPdfDialogue";
 function Sidebar() {
   return (

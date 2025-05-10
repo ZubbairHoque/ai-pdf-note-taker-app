@@ -37,6 +37,7 @@ function EditiorExtension ({editor }: any) {
       editor.state.selection.to,
       " "
     );
+    console.log("Selected Text:", selectedText); // Debugging: Log the selected text
     const result = await searchAI({
       query: selectedText,
       fileID: fileID as string,

@@ -93,6 +93,8 @@ function UploadPdfDialogue({ children }: UploadPdfDialogueProps) {
         splitText: ApiResult.data.result,
         fileID: fileID,
       });
+      console.log("Embedding Document with fileID:", fileID);
+      console.log("Split Text:", ApiResult.data.result);
       
 
       // Reset the file input

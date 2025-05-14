@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 export const AddNotes = mutation({
     args:{
@@ -28,7 +28,7 @@ export const AddNotes = mutation({
     }
 })
 
-export const GetNotes = mutation({
+export const GetNotes = query({
     args:{
         fileID:v.string(),
     },

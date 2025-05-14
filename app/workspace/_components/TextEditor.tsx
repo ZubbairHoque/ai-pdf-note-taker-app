@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useEditor } from '@tiptap/react';
 import TextAlign from '@tiptap/extension-text-align';
 import StarterKit from '@tiptap/starter-kit';
@@ -13,15 +13,18 @@ import { Italic } from '@tiptap/extension-italic';
 import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 
-function TextEditor() {
+function TextEditor({ fileID }: { fileID: string }) {
 
     /*
     * Used to get notes from the database
     */
 
-    const GetNoteQuery = useQuery(api.notes.GetNotes, {
-        fileID: fileID as string || ''
-    });
+    // Make sure to use a query function, not a mutation
+    const notes = useQuery(api.notes.GetNotes, {
+    fileID: fileID,
+  });
+
+    console.log(notes);
 
     const editor = useEditor({
         extensions: [
@@ -53,10 +56,14 @@ function TextEditor() {
         },
     });
 
+    useEffect(() => {
+        editor&&editor?.commands.setContent(notes)
+    }, [notes&& editor]);
+    // Set the initial content of the editor using the fetched data
 
-    
-
-
+    editor?.commands.setContent(
+        notes?.[0]?.note || '<p></p>'
+      );
 
     return (
         <div>

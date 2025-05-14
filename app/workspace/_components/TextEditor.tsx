@@ -10,8 +10,19 @@ import TextStyle from '@tiptap/extension-text-style';
 import Text from '@tiptap/extension-text';
 import Highlight from '@tiptap/extension-highlight';
 import { Italic } from '@tiptap/extension-italic';
+import { useQuery } from 'convex/react';
+import { api } from '@/convex/_generated/api';
 
 function TextEditor() {
+
+    /*
+    * Used to get notes from the database
+    */
+
+    const GetNoteQuery = useQuery(api.notes.GetNotes, {
+        fileID: fileID as string || ''
+    });
+
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -41,6 +52,11 @@ function TextEditor() {
             },
         },
     });
+
+
+    
+
+
 
     return (
         <div>

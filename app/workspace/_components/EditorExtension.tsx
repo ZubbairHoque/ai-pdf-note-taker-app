@@ -29,6 +29,7 @@ function EditiorExtension ({editor }: any) {
     const { fileID} = useParams();
   const searchAI = useAction(api.myAction.search);
   const { user } = useUser();
+  const saveNotes = useMutation(api.notes.AddNotes);
 
   const onAiClick = async () => {
     toast("AI is getting your answer...");
@@ -68,6 +69,13 @@ function EditiorExtension ({editor }: any) {
     editor.commands.setContent(
       AllText + '<p><strong> Answer: </strong>' + FinalAns + "</p>"
     );
+
+    saveNotes({ 
+        note: editor.getHTML(),
+        fileID: fileID as string,
+        createdBy: user?.primaryEmailAddress?.emailAddress || "unknown@example.com", // Fallback value,
+    })
+    
     
   };
 

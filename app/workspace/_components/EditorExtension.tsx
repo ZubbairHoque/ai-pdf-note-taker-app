@@ -15,6 +15,7 @@ import {
     Highlighter,
     Italic,
     List,
+    NotebookIcon,
     Sparkles,
     Strikethrough,
     TextQuote,
@@ -171,9 +172,13 @@ function EditiorExtension ({editor }: any) {
                     
                     <button
                         onClick={() => onAiClick ()}
-                        className={'hover:text-blue-500'}
+                        className={'hover:text-blue-500 mr-3'}
                     >
                         <Sparkles/>
+                    </button>
+
+                    <button>
+                        <NotebookIcon/>
                     </button>
                 </div>
             </div>

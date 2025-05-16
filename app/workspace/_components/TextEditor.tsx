@@ -26,8 +26,6 @@ function TextEditor({ fileID, onSave }: { fileID: string, onSave?: (content: str
 
   console.log("notes:", notes);
 
-  const saveNotes = useMutation(api.notes.AddNotes);
-  const { user } = useUser();
 
   const editor = useEditor({
     extensions: [
@@ -59,24 +57,14 @@ function TextEditor({ fileID, onSave }: { fileID: string, onSave?: (content: str
     },
   });
 
+  // Set the initial content of the editor using the fetched data
+
   useEffect(() => {
     editor && editor?.commands.setContent(notes);
   }, [notes && editor]);
-  // Set the initial content of the editor using the fetched data
+  
 
-  // Save the content when it changes
-  const handleSave = () => {
-    if (editor) {
-      const content = editor.getHTML();
-      saveNotes({
-        note: content,
-        fileID,
-        createdBy: user?.primaryEmailAddress?.emailAddress || "unknown@example.com",
-      });
-      onSave?.(content);
-    }
-  };
-
+  
   return (
     <div>
       <EditorExtension editor={editor} />

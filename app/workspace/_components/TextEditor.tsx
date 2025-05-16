@@ -10,10 +10,11 @@ import TextStyle from "@tiptap/extension-text-style";
 import Text from "@tiptap/extension-text";
 import Highlight from "@tiptap/extension-highlight";
 import { Italic } from "@tiptap/extension-italic";
-import { useQuery } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useUser } from "@clerk/nextjs";
 
-function TextEditor({ fileID }: { fileID: string }) {
+function TextEditor({ fileID, onSave }: { fileID: string, onSave?: (content: string) => void }) {
   /*
    * Used to get notes from the database
    */
@@ -23,7 +24,10 @@ function TextEditor({ fileID }: { fileID: string }) {
     fileID: fileID,
   });
 
-  console.log("notes:",notes);
+  console.log("notes:", notes);
+
+  const saveNotes = useMutation(api.notes.AddNotes);
+  const { user } = useUser();
 
   const editor = useEditor({
     extensions: [
@@ -60,12 +64,27 @@ function TextEditor({ fileID }: { fileID: string }) {
   }, [notes && editor]);
   // Set the initial content of the editor using the fetched data
 
+  // Save the content when it changes
+  const handleSave = () => {
+    if (editor) {
+      const content = editor.getHTML();
+      saveNotes({
+        note: content,
+        fileID,
+        createdBy: user?.primaryEmailAddress?.emailAddress || "unknown@example.com",
+      });
+      onSave?.(content);
+    }
+  };
+
   return (
     <div>
       <EditorExtension editor={editor} />
       <div className="overflow-scroll h-[88vh]">
         <EditorContent editor={editor} />
       </div>
+      {/* Optionally, you can add a Save button here for testing */}
+      {/* <button onClick={handleSave}>Save</button> */}
     </div>
   );
 }

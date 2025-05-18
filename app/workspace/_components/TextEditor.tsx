@@ -10,22 +10,21 @@ import TextStyle from "@tiptap/extension-text-style";
 import Text from "@tiptap/extension-text";
 import Highlight from "@tiptap/extension-highlight";
 import { Italic } from "@tiptap/extension-italic";
-import { useQuery, useMutation } from "convex/react";
+import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { useUser } from "@clerk/nextjs";
 
 function TextEditor({ fileID, onSave }: { fileID: string, onSave?: (content: string) => void }) {
   /*
    * Used to get notes from the database
    */
 
-  // Make sure to use a query function, not a mutation
-  const notes = useQuery(api.notes.GetNotes, {
-    fileID: fileID,
-  });
+  // Fetch notes for the current file
+  const notes = useQuery(api.notes.GetNotes, { fileID });
 
-  console.log("notes:", notes);
-
+  // Debug notes data
+  console.log("Notes in TextEditor:", notes);
+  console.log("FileID:", fileID);
+  console.log("Notes type:", typeof notes, "Notes is array:", Array.isArray(notes));
 
   const editor = useEditor({
     extensions: [
@@ -60,14 +59,16 @@ function TextEditor({ fileID, onSave }: { fileID: string, onSave?: (content: str
   // Set the initial content of the editor using the fetched data
 
   useEffect(() => {
-    editor && editor?.commands.setContent(notes);
-  }, [notes && editor]);
-  
-
+    // Only update editor content if editor exists and notes have been loaded
+    if (editor && notes) {
+      // If there are notes, set the content to the first note, otherwise set to empty string
+      editor.commands.setContent(notes[0]?.note || "");
+    }
+  }, [notes, editor]);
   
   return (
     <div>
-      <EditorExtension editor={editor} />
+      <EditorExtension editor={editor} note={notes} />
       <div className="overflow-scroll h-[88vh]">
         <EditorContent editor={editor} />
       </div>

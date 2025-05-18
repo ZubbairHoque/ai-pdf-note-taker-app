@@ -8,35 +8,29 @@ export const AddNotes = mutation({
         createdBy:v.string(),
     },
     handler:async(ctx, args) => {
-        const recordID = await ctx.db.query("notes")
-        .filter((q) => q.eq(q.field("fileID"), args.fileID))
-        .collect();
-
-    if (recordID.length === 0) 
-    {
         await ctx.db.insert("notes", {
             fileID: args.fileID,
             note: args.note,
             createdBy: args.createdBy,
-        })
+            createdAt: Date.now(),
+        });
     }
-    else {
-        await ctx.db.patch(recordID[0]._id, {
-            note: args.note,
-        })
-    }
-    }
-})
+});
 
 export const GetNotes = query({
-    args:{
-        fileID:v.string(),
-    },
-    handler:async(ctx, args) => {
-        const record = await ctx.db.query("notes")
-        .filter((q) => q.eq(q.field("fileID"), args.fileID))
-        .collect();
-        return record[0]?.note || null;
+    args: { fileID: v.string() },
+    handler: async (ctx, args) => {
+        const records = await ctx.db.query("notes")
+            .filter((q) => q.eq(q.field("fileID"), args.fileID))
+            .order("desc") // newest first
+            .collect();
+        return records;
     }
-})
-    
+});
+
+export const DeleteNote = mutation({
+  args: { _id: v.id("notes") },
+  handler: async (ctx, args) => {
+    await ctx.db.delete(args._id);
+  },
+});

@@ -28,6 +28,7 @@ export default defineSchema({
         fileID: v.string(),
         note: v.any(),
         createdBy: v.string(),
+        createdAt: v.number(), // Add a timestamp for sorting
       }),
 })
 

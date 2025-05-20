@@ -34,3 +34,10 @@ export const DeleteNote = mutation({
     await ctx.db.delete(args._id);
   },
 });
+
+export const UpdateNote = mutation({
+  args: { _id: v.id("notes"), note: v.any() },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args._id, { note: args.note });
+  },
+});

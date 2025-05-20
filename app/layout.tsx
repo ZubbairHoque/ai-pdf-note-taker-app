@@ -6,6 +6,7 @@ import { Roboto } from "next/font/google";
 import Provider from "./provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
+import Footer from "./dashboard/_components/Footer";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -38,9 +39,11 @@ export default function RootLayout({
             {children}
           </div>
         </div>
+        <Footer />
       </Provider>
       <Toaster />
       </body>
+
     </html>
   </ClerkProvider>
   );

@@ -19,6 +19,11 @@ function DashboardLayout({
         <div className="p-10">
           {children}
         </div>
+        <div className="fixed bottom-0 w-full">
+          <footer className="w-full text-center py-4 text-xs text-gray-500">
+            Uicons by <a href="https://www.flaticon.com/uicons" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Flaticon</a>
+          </footer>
+        </div>
       </div>
     </div>
   )

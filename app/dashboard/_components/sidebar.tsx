@@ -1,9 +1,23 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
 import React, { Children } from "react";
 import UploadPdfDialogue from "./UploadPdfDialogue";
+import { useUser } from "@clerk/nextjs";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 function Sidebar() {
+  const { user } = useUser();
+
+  const fileList = useQuery(api.fileStorage.GetUserFiles, {
+    userEmail: user?.emailAddresses[0]?.emailAddress || "email@email.com"
+  });
+
+  const maxFiles = 5;
+  const filesCount = fileList?.length ?? 0;
+  const isLimitReached = filesCount >= maxFiles;
+
   return (
     <div className="shadow-md h-screen p-3 bg-white">
       {/* Sidebar Header */}
@@ -14,8 +28,15 @@ function Sidebar() {
       </div>
       <div className="mt-5 mb-4">
         <UploadPdfDialogue>
-          <Button className="w-full">+ Upload PDF</Button>
+          <Button className="w-full" disabled={isLimitReached}>
+            + Upload PDF
+          </Button>
         </UploadPdfDialogue>        
+        {isLimitReached && (
+          <p className="text-xs text-red-500 mt-2 text-center">
+            Maximum of {maxFiles} files reached.
+          </p>
+        )}
       </div>
 
       {/* Sidebar Options */}
@@ -45,8 +66,7 @@ function Sidebar() {
               />
               <path
                 fill="currentColor"
-                d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 
-                2 0 0 1-2 2H5a2 2 0 0 1-2-2zm16 0H5v3h14zM5 
+                d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm16 0H5v3h14zM5 
                 19v-9h4v9zm6 0h8v-9h-8z"
               />
             </g>
@@ -77,8 +97,8 @@ function Sidebar() {
         </button>
       </div>
       <div className="absolute bottom-20 w-[85%]">
-        <Progress value={30} />
-        <p className="text-sm mt-1">{/*TODO: add page usage here*/}</p>
+        <Progress value={filesCount * (1 / maxFiles) * 100} />
+        <p className="text-sm mt-1">{filesCount}/{maxFiles} Files Uploaded</p>
         <p className="text-xs text-gray-500 mt-2">Upgrade to Upload more PDFs</p>
       </div>
     </div>

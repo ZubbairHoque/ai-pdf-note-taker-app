@@ -75,3 +75,24 @@ export const GetUserFiles=query({
     return result;
   }
 })
+
+export const DeleteFile = mutation({
+  args: {
+    fileID: v.string(), // Accept your custom fileID (UUID)
+  },
+  handler: async (ctx, args) => {
+    // Find the document with the matching fileID
+    const file = await ctx.db
+      .query("pdfFiles")
+      .filter((q) => q.eq(q.field("fileID"), args.fileID))
+      .first();
+
+    if (!file) {
+      throw new Error("File not found");
+    }
+
+    // Delete by Convex's internal _id
+    await ctx.db.delete(file._id);
+    return { success: true };
+  },
+});

@@ -1,11 +1,31 @@
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+"use client"
+import React, { useState, useRef, useEffect } from 'react'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { api } from '@/convex/_generated/api'
+import { useUser } from "@clerk/nextjs";
+import { useAction, useMutation } from "convex/react";
+import { v4 as uuidv4 } from "uuid";
+import Axios from "axios";
 
-function UploadPdfDialogue() {
-  const [open, setOpen] = useState(false);
+// Define the UploadPdfDialogueProps type
+interface UploadPdfDialogueProps {
+  children?: React.ReactNode;
+}
+
+function UploadPdfDialogue({ children }: UploadPdfDialogueProps) {
+  const generateUploadUrl = useMutation(api.fileStorage.generateUploadUrl);
+  const savePdfFile = useMutation(api.fileStorage.savePdfFile);
+  const { user } = useUser();
+  const getFileUrl = useMutation(api.fileStorage.getFileUrl);
+
+  // JavaScript logic for handling file input
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [fileName, setFileName] = useState<string>("No file chosen");
   const [customFileName, setCustomFileName] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false); // Corrected state name to `setLoading`
+  const embeddDocument = useAction(api.myAction.ingest);
+  const [open, setOpen] = useState(false);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -14,7 +34,7 @@ function UploadPdfDialogue() {
   };
 
   const handleChooseFile = () => {
-    document.getElementById("fileInput")?.click(); // Programmatically trigger the file input
+    fileInputRef.current?.click(); // Trigger the file input using the ref
   };
 
   const handleClose = () => {
@@ -22,6 +42,90 @@ function UploadPdfDialogue() {
     setFileName("No file chosen");
     setCustomFileName("");
   };
+
+  const OnUpload = async () => {
+    const file = fileInputRef.current?.files?.[0]; // Access the selected file
+    if (!file) {
+      console.error("No file selected");
+      alert("Please select a file before uploading.");
+      return;
+    }
+
+    console.log("Selected File:", file.name); // Debugging: Log the selected file name
+
+    try {
+      setLoading(true); // Set loading to true when the upload starts
+
+      // Declare fileID at the top of the function
+      const fileID = uuidv4();
+
+      // Step 1: Get short-lived upload URL
+      const postUrl = await generateUploadUrl();
+
+      // Step 2: POST the file to the URL
+      const result = await fetch(postUrl, {
+        method: "POST",
+        headers: { "Content-Type": file.type },
+        body: file,
+      });
+
+      const { storageId } = await result.json();
+      console.log("storageId", storageId);
+
+      // Step 3: Save the file metadata to the database
+      const fileUrl = await getFileUrl({ storage: storageId });
+
+      await savePdfFile({
+        fileID: fileID,
+        fileName: customFileName ?? "Untitled",
+        storageId: storageId,
+        fiLeUrl: fileUrl ?? "",
+        createdBy: user?.primaryEmailAddress?.emailAddress ?? "unknown",
+      });
+
+      // Use fileID in subsequent code
+
+      console.log("File uploaded successfully");
+
+      const ApiResult = await Axios.get('api/pdf-loader?pdfUrl=' + fileUrl)
+      console.log(ApiResult.data.result)
+      await embeddDocument({
+        splitText: ApiResult.data.result,
+        fileID: fileID,
+      });
+      console.log("Embedding Document with fileID:", fileID);
+      console.log("Split Text:", ApiResult.data.result);
+      
+
+      // Reset the file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      setFileName("No file chosen");
+      setCustomFileName("");
+      setOpen(false); // Close the dialog
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      alert("Failed to upload the file. Please try again.");
+    } finally {
+      setLoading(false); // Set loading to false when the upload completes or fails
+    }
+
+
+   
+  };
+
+  // Add/remove a class to body when modal is open
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+    return () => {
+      document.body.classList.remove("modal-open");
+    };
+  }, [open]);
 
   return (
     <>
@@ -32,7 +136,7 @@ function UploadPdfDialogue() {
 
       {/* Modal */}
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
             {/* Modal Header */}
             <div className="flex justify-between items-center mb-4">
@@ -53,11 +157,12 @@ function UploadPdfDialogue() {
               <div className="flex items-center gap-4">
                 {/* Hidden File Input */}
                 <input
-                  id="fileInput"
+                  id="fileInput" // Add an ID to the file input
                   type="file"
-                  className="hidden"
+                  ref={fileInputRef} // Connect the ref to the input
                   accept=".pdf"
-                  onChange={handleFileChange}
+                  onChange={handleFileChange} // Handle file selection
+                  style={{ display: "none" }} // Hide the input
                 />
 
                 {/* Custom Choose File Button */}
@@ -101,26 +206,58 @@ function UploadPdfDialogue() {
                 className="hover:bg-gray-800"
                 variant="secondary"
                 onClick={handleClose}
+                disabled={loading}
               >
                 Close
               </Button>
               <Button
-                className={`bg-blue-500 hover:bg-blue-700 text-white ${
-                  fileName === "No file chosen" || customFileName.trim() === ""
+                className={`bg-blue-500 hover:bg-blue-700 text-white flex items-center justify-center ${
+                  fileName === "No file chosen" ||
+                  customFileName.trim() === "" ||
+                  loading
                     ? "opacity-50 cursor-not-allowed"
                     : ""
                 }`}
                 onClick={() => {
-                  if (fileName === "No file chosen" || customFileName.trim() === "") {
-                    alert("Please select a file and provide a file name before uploading.");
+                  if (
+                    fileName === "No file chosen" ||
+                    customFileName.trim() === "" ||
+                    loading
+                  ) {
                     return;
                   }
                   console.log("Uploading file...");
-                  handleClose();
+                  OnUpload(); // Trigger the upload process
                 }}
-                disabled={fileName === "No file chosen" || customFileName.trim() === ""}
+                disabled={
+                  fileName === "No file chosen" ||
+                  customFileName.trim() === "" ||
+                  loading
+                }
               >
-                Upload
+                {loading && (
+                  <svg
+                    className="animate-spin mr-2 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    ></path>
+                  </svg>
+                )}
+                {loading ? "Uploading..." : "Upload"}
               </Button>
             </div>
           </div>

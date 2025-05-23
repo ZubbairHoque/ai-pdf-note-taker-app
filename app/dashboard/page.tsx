@@ -37,8 +37,10 @@ function Dashboard() {
 
   return (
     <div>
-      <h2 className='font-medium text-3xl font-bold mb-4'>Workspace</h2>
-      <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 mt-10'>
+      <h2 className="font-medium text-3xl font-bold mb-4">Workspace</h2>
+      <div id="dashboard-main-content"
+        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 mt-10"
+      >
         {Array.isArray(fileList) && fileList.length > 0 ? (
           fileList.map((file: any, index: number) => (
             <div

@@ -433,6 +433,10 @@
     margin-top: auto;
   }
 
+  .mr-2 {
+    margin-right: calc(var(--spacing) * 2);
+  }
+
   .mr-3 {
     margin-right: calc(var(--spacing) * 3);
   }
@@ -459,10 +463,6 @@
 
   .grid {
     display: grid;
-  }
-
-  .hidden {
-    display: none;
   }
 
   .inline-flex {
@@ -760,16 +760,6 @@
     background-color: var(--color-black);
   }
 
-  .bg-black\/40 {
-    background-color: #0006;
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .bg-black\/40 {
-      background-color: color-mix(in oklab, var(--color-black) 40%, transparent);
-    }
-  }
-
   .bg-black\/50 {
     background-color: #00000080;
   }
@@ -777,16 +767,6 @@
   @supports (color: color-mix(in lab, red, red)) {
     .bg-black\/50 {
       background-color: color-mix(in oklab, var(--color-black) 50%, transparent);
-    }
-  }
-
-  .bg-black\/60 {
-    background-color: #0009;
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .bg-black\/60 {
-      background-color: color-mix(in oklab, var(--color-black) 60%, transparent);
     }
   }
 
@@ -1776,6 +1756,15 @@ body {
   --sidebar-accent-foreground: oklch(.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(.556 0 0);
+}
+
+body.modal-open #dashboard-main-content {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  user-select: none !important;
 }
 
 @property --tw-translate-x {

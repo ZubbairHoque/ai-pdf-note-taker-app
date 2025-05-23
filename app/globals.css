@@ -1,5 +1,3 @@
-
-
 @import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
@@ -340,4 +338,18 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Hide dashboard content when modal is open */
+body.modal-open #dashboard-main-content {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+/* Add this to your global CSS file */
+body.modal-open #dashboard-main-content {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
 }

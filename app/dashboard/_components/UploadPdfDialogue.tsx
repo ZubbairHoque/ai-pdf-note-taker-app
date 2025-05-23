@@ -11,9 +11,10 @@ import Axios from "axios";
 // Define the UploadPdfDialogueProps type
 interface UploadPdfDialogueProps {
   children?: React.ReactNode;
+  isLimitReached?: boolean;
 }
 
-function UploadPdfDialogue({ children }: UploadPdfDialogueProps) {
+function UploadPdfDialogue({ children, isLimitReached }: UploadPdfDialogueProps) {
   const generateUploadUrl = useMutation(api.fileStorage.generateUploadUrl);
   const savePdfFile = useMutation(api.fileStorage.savePdfFile);
   const { user } = useUser();
@@ -44,6 +45,11 @@ function UploadPdfDialogue({ children }: UploadPdfDialogueProps) {
   };
 
   const OnUpload = async () => {
+    if (isLimitReached) {
+      alert("You have reached the maximum number of uploads.");
+      return;
+    }
+
     const file = fileInputRef.current?.files?.[0]; // Access the selected file
     if (!file) {
       console.error("No file selected");
@@ -129,25 +135,46 @@ function UploadPdfDialogue({ children }: UploadPdfDialogueProps) {
 
   return (
     <>
-      {/* Trigger Button */}
-      <Button onClick={() => setOpen(true)} className="w-full">
-        + Upload PDF File
-      </Button>
-
+      
+          <Button
+            onClick={() => setOpen(true)}
+            className="w-full"
+            disabled={isLimitReached}
+          >
+            + Upload PDF File
+          </Button>
+        
       {/* Modal */}
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="fixed inset-0 bg-black opacity-30"></div>
+          <div className="bg-white rounded-lg overflow-hidden shadow-lg z-10 max-w-md w-full p-6">
             {/* Modal Header */}
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold">Upload PDF file?</h2>
+            <div className="flex justify-between items-center">
+              <h2 className="text-lg font-semibold">Upload PDF File</h2>
               <button
-                type="button"
-                className="text-gray-500 hover:text-gray-700 text-lg px-4 py-2"
-                aria-label="Close"
                 onClick={handleClose}
+                className="text-gray-500 hover:text-gray-700"
+                aria-label="Close"
               >
-                &times;
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
               </button>
             </div>
 

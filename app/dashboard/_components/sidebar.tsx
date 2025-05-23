@@ -27,14 +27,14 @@ function Sidebar() {
         />
       </div>
       <div className="mt-5 mb-4">
-        <UploadPdfDialogue>
+        <UploadPdfDialogue isLimitReached={isLimitReached}>
           <Button className="w-full" disabled={isLimitReached}>
             + Upload PDF
           </Button>
         </UploadPdfDialogue>        
         {isLimitReached && (
           <p className="text-xs text-red-500 mt-2 text-center">
-            Maximum of {maxFiles} files reached.
+            Maximum of {maxFiles} files reached. 
           </p>
         )}
       </div>

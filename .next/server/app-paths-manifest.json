@@ -1,6 +1,4 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/pdf-loader/route": "app/api/pdf-loader/route.js",
-  "/dashboard/page": "app/dashboard/page.js",
+  "/dashboard/upgrade/page": "app/dashboard/upgrade/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js"
 }

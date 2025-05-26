@@ -2,13 +2,18 @@
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
-import React, { Children } from "react";
+import React from "react";
 import UploadPdfDialogue from "./UploadPdfDialogue";
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
+
 function Sidebar() {
   const { user } = useUser();
+  const path = usePathname();
+  const router = useRouter();
 
   const fileList = useQuery(api.fileStorage.GetUserFiles, {
     userEmail: user?.emailAddresses[0]?.emailAddress || "email@email.com"
@@ -34,16 +39,16 @@ function Sidebar() {
         </UploadPdfDialogue>        
         {isLimitReached && (
           <p className="text-xs text-red-500 mt-2 text-center">
-            Maximum of {maxFiles} files reached. 
+            Maximum of {maxFiles} files reached. <Link href={"/dashboard/upgrade"} className="underline hover:bg-slate-200"> Please "click here" to upgrade your plan to upload more files.</Link>
           </p>
         )}
       </div>
 
       {/* Sidebar Options */}
-      <div>
+      <div className={path === "/dashboard" ? "bg-slate-200" : ""}>
         <button
-          className="flex items-center gap-2 p-2 w-full text-left
-         hover:bg-gray-100 rounded"
+          className="flex items-center gap-2 p-2 w-full text-left hover:bg-gray-100 rounded"
+          onClick={() => router.push("/dashboard")}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -76,8 +81,10 @@ function Sidebar() {
       </div>
       <div className="mt-2">
         <button
-          className="flex items-center 
-        gap-2 p-2 w-full text-left hover:bg-gray-100 rounded"
+          className={`flex items-center 
+        gap-2 p-2 w-full text-left hover:bg-gray-100 rounded
+        ${path === "/dashboard/upgrade" ? " bg-slate-200" : ""}`}
+          onClick={() => router.push("/dashboard/upgrade")}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

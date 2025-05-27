@@ -6,6 +6,7 @@ export default defineSchema({
         userName: v.string(),
         email:  v.string(),
         imagerUrl:  v.string(),
+        Upgrade:v.boolean(),
     }),
 
     pdfFiles: defineTable({

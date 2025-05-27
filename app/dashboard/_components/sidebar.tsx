@@ -24,7 +24,7 @@ function Sidebar() {
   const isLimitReached = filesCount >= maxFiles;
 
   return (
-    <div className="shadow-md h-screen p-3 bg-white">
+    <div className="shadow-md h-screen p-3 bg-white md:bg-white md:bg-opacity-100 bg-opacity-80 backdrop-blur w-64 flex-shrink-0 flex flex-col transition-all duration-300">
       {/* Sidebar Header */}
       <div className=" flex justify-right">
         <Image src={"/logo.PNG"} alt="logo" width={65} height={40}  

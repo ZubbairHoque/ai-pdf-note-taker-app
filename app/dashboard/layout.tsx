@@ -11,12 +11,12 @@ function DashboardLayout({
 }) {
   return (
     <div>
-      <div className="md:w-64  h-screen fixed">
+      <div className="md:w-48 h-screen fixed">
         <Sidebar />
       </div>
-      <div className="md:ml-64">
+      <div className="md:ml-48">
         <Header />
-        <div className="p-10">
+        <div className="p-10 overflow-x-auto"> {/* Add overflow-x-auto here */}
           {children}
         </div>
         <div className="fixed bottom-0 w-full">

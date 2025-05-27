@@ -1,6 +1,11 @@
+"use client"
+import { PayPalButtons } from '@paypal/react-paypal-js'
 import React from 'react'
 
 function UpgradePlans() {
+  const onPaymentSuccess = () => {
+    
+  }
   return (
     <div>
       <h2 className='text-3xl font-bold'>Plans</h2>
@@ -85,12 +90,32 @@ function UpgradePlans() {
         </li>
       </ul>
 
-      <a
+      {/* <a
         href="#"
         className="mt-8 block rounded-full border border-indigo-600 bg-indigo-600 px-12 py-3 text-center text-sm font-medium text-white hover:bg-indigo-700 hover:ring-1 hover:ring-indigo-700 focus:ring-3 focus:outline-hidden"
       >
         Get Started
-      </a>
+      </a> */}
+
+      <PayPalButtons style={{ layout: "horizontal" }} 
+      onCancel={()=> console.log("Payment cancelled")}
+      onApprove={async () => { onPaymentSuccess(); }}
+      createOrder={(data, actions) => {
+        return actions?.order?.create({
+          intent: "CAPTURE",
+          purchase_units: [
+            {
+              amount: {
+                value: "10",
+                currency_code: "GBP"
+              }
+            }
+          ]
+        })
+      }}
+
+      />
+      
     </div>
 
     <div className="rounded-2xl border border-gray-200 p-6 shadow-xs sm:px-8 lg:p-12">
@@ -169,12 +194,7 @@ function UpgradePlans() {
         </li>
       </ul>
 
-      <a
-        href="#"
-        className="mt-8 block rounded-full border border-indigo-600 bg-white px-12 py-3 text-center text-sm font-medium text-indigo-600 hover:ring-1 hover:ring-indigo-600 focus:ring-3 focus:outline-hidden"
-      >
-        Get Started
-      </a>
+
     </div>
   </div>
 </div>

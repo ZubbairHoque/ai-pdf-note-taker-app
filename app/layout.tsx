@@ -6,6 +6,7 @@ import { Roboto } from "next/font/google";
 import Provider from "./provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
+import Sidebar from "./dashboard/_components/sidebar";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -31,7 +32,6 @@ export default function RootLayout({
       >  
       <Provider>
         <div > 
-          {/* Sidebar */} 
 
           {/* Dashboard Content */}
           <div>

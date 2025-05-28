@@ -1,31 +1,5 @@
 {
   "pages": {
-    "/(auth)/sign-in/[[...sign-in]]/page": [
-      "static/chunks/node_modules_next_dist_1a6ee436._.js",
-      "static/chunks/app_favicon_ico_mjs_659ce808._.js",
-      "static/chunks/[root-of-the-server]__5c2c66b4._.css",
-      "static/chunks/node_modules_@clerk_nextjs_dist_esm_app-router_d00baf61._.js",
-      "static/chunks/node_modules_next_5470b979._.js",
-      "static/chunks/node_modules_convex_dist_esm_6b8e77d1._.js",
-      "static/chunks/node_modules_@clerk_shared_dist_f53d3301._.js",
-      "static/chunks/node_modules_swr_dist_d3931529._.js",
-      "static/chunks/node_modules_@clerk_clerk-react_dist_8fe6cf15._.js",
-      "static/chunks/node_modules_tailwind-merge_dist_bundle-mjs_mjs_b854acb4._.js",
-      "static/chunks/node_modules_axios_lib_99999129._.js",
-      "static/chunks/node_modules_26a3eaf7._.js",
-      "static/chunks/_75305bcf._.js",
-      "static/chunks/app_layout_tsx_c0237562._.js",
-      "static/chunks/node_modules_@clerk_nextjs_dist_esm_client-boundary_5c3cad18._.js",
-      "static/chunks/[next]_internal_font_google_roboto_f76ca946_module_5c63be21.css",
-      "static/chunks/app_(auth)_sign-in_[[___sign-in]]_page_tsx_b94d118a._.js",
-      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_fd44f5a4._.js",
-      "static/chunks/node_modules_next_dist_compiled_2ce9398a._.js",
-      "static/chunks/node_modules_next_dist_client_8f19e6fb._.js",
-      "static/chunks/node_modules_next_dist_2ecbf5fa._.js",
-      "static/chunks/node_modules_@swc_helpers_cjs_00636ac3._.js",
-      "static/chunks/_e69f0d32._.js",
-      "static/chunks/_93808211._.js"
-    ],
     "/_not-found/page": [
       "static/chunks/node_modules_next_dist_1a6ee436._.js",
       "static/chunks/app_favicon_ico_mjs_659ce808._.js",

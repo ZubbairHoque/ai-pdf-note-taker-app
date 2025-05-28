@@ -2,21 +2,17 @@
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
-import React from "react";
+import React, { Children } from "react";
 import UploadPdfDialogue from "./UploadPdfDialogue";
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-
 function Sidebar() {
   const { user } = useUser();
-  const path = usePathname();
-  const router = useRouter();
 
   const fileList = useQuery(api.fileStorage.GetUserFiles, {
-    userEmail: user?.emailAddresses[0]?.emailAddress || "email@email.com"
+    userEmail: user?.emailAddresses[0]?.emailAddress || "email@email.com",
   });
 
   const maxFiles = 5;
@@ -24,42 +20,54 @@ function Sidebar() {
   const isLimitReached = filesCount >= maxFiles;
 
   return (
-    <div className="shadow-md h-screen p-3 bg-white md:bg-white md:bg-opacity-100 bg-opacity-80 backdrop-blur w-64 flex-shrink-0 flex flex-col transition-all duration-300">
+    <div className="fixed top-0 left-0 shadow-md h-screen p-3 bg-white w-[250px] ">
       {/* Sidebar Header */}
       <div className=" flex justify-right">
-        <Image src={"/logo.PNG"} alt="logo" width={65} height={40}  
-        className="  border-5 border-black p-2 rounded-lg shadow-sm"
+        <Image
+          src={"/logo.PNG"}
+          alt="logo"
+          width={65}
+          height={40}
+          className="  border-5 border-black p-2 rounded-lg shadow-sm"
         />
       </div>
       <div className="mt-5 mb-4">
-        <UploadPdfDialogue isLimitReached={isLimitReached}>
+        <UploadPdfDialogue>
           <Button className="w-full" disabled={isLimitReached}>
             + Upload PDF
           </Button>
-        </UploadPdfDialogue>        
+        </UploadPdfDialogue>
         {isLimitReached && (
-          <p className="text-xs text-red-500 mt-2 text-center">
-            Maximum of {maxFiles} files reached. <Link href={"/dashboard/upgrade"} className="underline hover:bg-slate-200"> Please "click here" to upgrade your plan to upload more files.</Link>
+          <p className="text-xs text-red-500 mt-2 text-center ">
+            Maximum of {maxFiles} files reached.{" "}
+            <Link
+              href={"/dashboard/upgrade"}
+              className="underline hover:bg-slate-200"
+            >
+              {" "}
+              Please "click here" to upgrade your plan to upload more files.
+            </Link>
           </p>
         )}
       </div>
 
       {/* Sidebar Options */}
-      <div className={path === "/dashboard" ? "bg-slate-200" : ""}>
-        <button
-          className="flex items-center gap-2 p-2 w-full text-left hover:bg-gray-100 rounded"
-          onClick={() => router.push("/dashboard")}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            className="text-black"
+      <div>
+        <Link href={"/dashboard"}>
+          <button
+            className="flex items-center gap-2 p-2 w-full text-left
+         hover:bg-gray-100 rounded"
           >
-            <g fill="none" fillRule="evenodd">
-              <path
-                d="m12.593 23.258l-.011.002l-
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              className="text-black"
+            >
+              <g fill="none" fillRule="evenodd">
+                <path
+                  d="m12.593 23.258l-.011.002l-
               .071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.
               004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l
               .104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.
@@ -68,45 +76,50 @@ function Sidebar() {
               .02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.
               018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.
               43l-.003-.012l-.01-.01z"
-              />
-              <path
-                fill="currentColor"
-                d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm16 0H5v3h14zM5 
+                />
+                <path
+                  fill="currentColor"
+                  d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm16 0H5v3h14zM5 
                 19v-9h4v9zm6 0h8v-9h-8z"
-              />
-            </g>
-          </svg>
-          <h2 className="text-black">Workspace</h2>
-        </button>
+                />
+              </g>
+            </svg>
+            <h2 className="text-black">Workspace</h2>
+          </button>
+        </Link>
       </div>
       <div className="mt-2">
-        <button
-          className={`flex items-center 
-        gap-2 p-2 w-full text-left hover:bg-gray-100 rounded
-        ${path === "/dashboard/upgrade" ? " bg-slate-200" : ""}`}
-          onClick={() => router.push("/dashboard/upgrade")}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
+        <Link href={"/dashboard/upgrade"}>
+          <button
+            className="flex items-center 
+        gap-2 p-2 w-full text-left hover:bg-gray-100 rounded"
           >
-            <path
-              fill="grey-100"
-              d="M12 22q-3.475-.875-5.738-3.988T4 11.1V5l8-3l8 3v6.1q0 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="grey-100"
+                d="M12 22q-3.475-.875-5.738-3.988T4 11.1V5l8-3l8 3v6.1q0 
           3.8-2.262 6.913T12 22m0-2.1q2.6-.825 
           4.3-3.3t1.7-5.5V6.375l-6-2.25l-6 2.25V11.1q0 3.025 1.7 
           5.5t4.3 3.3m0-7.9"
-            />
-          </svg>
-          <h2>Upgrade</h2>
-        </button>
+              />
+            </svg>
+            <h2>Upgrade</h2>
+          </button>
+        </Link>
       </div>
       <div className="absolute bottom-20 w-[85%]">
         <Progress value={filesCount * (1 / maxFiles) * 100} />
-        <p className="text-sm mt-1">{filesCount}/{maxFiles} Files Uploaded</p>
-        <p className="text-xs text-gray-500 mt-2">Upgrade to Upload more PDFs</p>
+        <p className="text-sm mt-1">
+          {filesCount}/{maxFiles} Files Uploaded
+        </p>
+        <p className="text-xs text-gray-500 mt-2">
+          Upgrade to Upload more PDFs
+        </p>
       </div>
     </div>
   );

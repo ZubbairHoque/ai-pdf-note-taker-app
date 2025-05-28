@@ -1,11 +1,10 @@
 "use client"
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { useUser } from '@clerk/nextjs';
-import { useQuery } from 'convex/react';
+import {  useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import Link from 'next/link';
-
 
 function Dashboard() {
   const { user } = useUser();
@@ -30,6 +29,8 @@ function Dashboard() {
               flex-col items-center cursor-pointer hover:scale-105 transition-all 
               duration-200 ease-in-out'
             >
+
+              
               <Link href={'workspace/' + file.fileID} className="w-full">
                 <div className='flex flex-col items-center'>
                   <Image src={"/pdf.png"} alt="file" width={50} height={50} />

@@ -1,18 +1,36 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "./_components/sidebar";
+import UploadPdfDialogue from "./_components/UploadPdfDialogue";
 import Header from "./_components/Header";
-
+import { useUser } from "@clerk/nextjs";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { user } = useUser();
+  const [showModal, setShowModal] = useState(false);
+
+  const fileList = useQuery(api.fileStorage.GetUserFiles, {
+    userEmail: user?.emailAddresses[0]?.emailAddress || "email@email.com",
+  });
+  const maxFiles = 5;
+  const filesCount = fileList?.length ?? 0;
+  const isLimitReached = filesCount >= maxFiles;
+
   return (
     <div>
-      <div className="md:w-64  h-screen fixed">
-        <Sidebar />
+      <div className="md:w-64 h-screen fixed">
+        <Sidebar
+          onUploadClick={() => setShowModal(true)}
+          isLimitReached={isLimitReached}
+          filesCount={filesCount}
+          maxFiles={maxFiles}
+        />
       </div>
       <div className="md:ml-64">
         <Header />
@@ -25,6 +43,9 @@ function DashboardLayout({
           </footer>
         </div>
       </div>
+      {showModal && (
+        <UploadPdfDialogue onClose={() => setShowModal(false)} />
+      )}
     </div>
   )
 }

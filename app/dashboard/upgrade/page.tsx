@@ -1,11 +1,26 @@
 "use client"
+import { api } from '@/convex/_generated/api';
+import { useUser } from '@clerk/nextjs';
 import { PayPalButtons } from '@paypal/react-paypal-js'
+import { useMutation } from 'convex/react'
 import React from 'react'
+import { toast } from 'sonner';
 
 function UpgradePlans() {
-  const onPaymentSuccess = () => {
-    
+
+  const {user} = useUser();
+  const upgradeUserPlan = useMutation(api.user.userUpgrade);
+  const onPaymentSuccess = async() => {
+    const result = await upgradeUserPlan({
+      userEmail: user?.emailAddresses[0]?.emailAddress || "email@email.com",
+  })
+    if (result) {
+      toast.success("User upgraded successfully!");
+    } else {
+      alert("Failed to upgrade user.");
+    }
   }
+
   return (
     <div>
       <h2 className='text-3xl font-bold'>Plans</h2>

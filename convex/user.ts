@@ -19,14 +19,34 @@ export const createUser = mutation({
             await ctx.db.insert("users",{
                 email:args.email,
                 userName:args.userName,
-                imagerUrl:args.imageUrl
+                imagerUrl:args.imageUrl,
+                Upgrade: false,
             });
 
             return "user created successfully! "
         }
 
         // otherwise insert new user entry
-    },
+    }
 });
 
-export default createUser;
+export const userUpgrade = mutation({
+    args: {
+        userEmail: v.string(),
+
+    },
+    handler: async (ctx,args) => {
+        const result = await ctx.db.query("users")
+        .filter((q) => q.eq(q.field("email"), args.userEmail))
+        .collect();
+        if(result)
+            {
+                await ctx.db.patch(
+                result[0]._id,
+                { Upgrade: true }
+            )
+            return "User upgraded successfully!"
+        }
+    }
+
+})

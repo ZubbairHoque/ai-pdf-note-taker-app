@@ -2,25 +2,29 @@
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
-import React, { Children } from "react";
+import React, { useState } from "react";
 import UploadPdfDialogue from "./UploadPdfDialogue";
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
-function Sidebar() {
+interface SidebarProps {
+  onUploadClick: () => void;
+  isLimitReached: boolean;
+  filesCount: number;
+  maxFiles: number;
+}
+
+function Sidebar({ onUploadClick, isLimitReached, filesCount, maxFiles }: SidebarProps) {
   const { user } = useUser();
+  const [showModal, setShowModal] = useState(false);
 
   const fileList = useQuery(api.fileStorage.GetUserFiles, {
     userEmail: user?.emailAddresses[0]?.emailAddress || "email@email.com",
   });
 
-  const maxFiles = 5;
-  const filesCount = fileList?.length ?? 0;
-  const isLimitReached = filesCount >= maxFiles;
-
   return (
-    <div className="fixed top-0 left-0 shadow-md h-screen p-3 bg-white w-[250px] ">
+    <div className="fixed top-0 left-0 shadow-md h-screen p-3 bg-white w-[250px]">
       {/* Sidebar Header */}
       <div className=" flex justify-right">
         <Image
@@ -32,11 +36,13 @@ function Sidebar() {
         />
       </div>
       <div className="mt-5 mb-4">
-        <UploadPdfDialogue>
-          <Button className="w-full" disabled={isLimitReached}>
-            + Upload PDF
-          </Button>
-        </UploadPdfDialogue>
+        <Button
+          className="w-full"
+          disabled={isLimitReached}
+          onClick={onUploadClick}
+        >
+          + Upload PDF
+        </Button>
         {isLimitReached && (
           <p className="text-xs text-red-500 mt-2 text-center ">
             Maximum of {maxFiles} files reached.{" "}
@@ -44,7 +50,6 @@ function Sidebar() {
               href={"/dashboard/upgrade"}
               className="underline hover:bg-slate-200"
             >
-              {" "}
               Please "click here" to upgrade your plan to upload more files.
             </Link>
           </p>

@@ -23,6 +23,14 @@ function Sidebar({ onUploadClick, isLimitReached, filesCount, maxFiles }: Sideba
     userEmail: user?.emailAddresses[0]?.emailAddress || "email@email.com",
   });
 
+  const userInfo = useQuery(api.user.GetUserInfo, {
+    userEmail: user?.emailAddresses[0]?.emailAddress || "email@email.com",
+  });
+
+  // If upgraded, unlimited files; otherwise, limit to 5
+  const computedMaxFiles = userInfo?.Upgrade ? Infinity : 5;
+  // const filesCount = fileList?.length ?? 0;
+
   return (
     <div className="fixed top-0 left-0 shadow-md h-screen p-3 bg-white w-[250px]">
       {/* Sidebar Header */}
@@ -38,14 +46,14 @@ function Sidebar({ onUploadClick, isLimitReached, filesCount, maxFiles }: Sideba
       <div className="mt-5 mb-4">
         <Button
           className="w-full"
-          disabled={isLimitReached}
+          disabled={!userInfo?.Upgrade && isLimitReached}
           onClick={onUploadClick}
         >
           + Upload PDF
         </Button>
-        {isLimitReached && (
+        {!userInfo?.Upgrade && isLimitReached && (
           <p className="text-xs text-red-500 mt-2 text-center ">
-            Maximum of {maxFiles} files reached.{" "}
+            Maximum of {computedMaxFiles} files reached.{" "}
             <Link
               href={"/dashboard/upgrade"}
               className="underline hover:bg-slate-200"
@@ -118,12 +126,12 @@ function Sidebar({ onUploadClick, isLimitReached, filesCount, maxFiles }: Sideba
         </Link>
       </div>
       <div className="absolute bottom-20 w-[85%]">
-        <Progress value={filesCount * (1 / maxFiles) * 100} />
+        <Progress value={userInfo?.Upgrade ? 100 : (filesCount * (1 / computedMaxFiles) * 100)} />
         <p className="text-sm mt-1">
-          {filesCount}/{maxFiles} Files Uploaded
+          {filesCount}/{userInfo?.Upgrade ? "∞" : computedMaxFiles} Files Uploaded
         </p>
         <p className="text-xs text-gray-500 mt-2">
-          Upgrade to Upload more PDFs
+          {userInfo?.Upgrade ? "Unlimited uploads enabled!" : "Upgrade to Upload more PDFs"}
         </p>
       </div>
     </div>

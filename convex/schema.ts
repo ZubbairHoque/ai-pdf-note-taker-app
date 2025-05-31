@@ -5,8 +5,8 @@ export default defineSchema({
     users:defineTable({
         userName: v.string(),
         email:  v.string(),
-        imagerUrl:  v.string(),
-        Upgrade:v.boolean(),
+        imageUrl:  v.string(),
+        Upgrade: v.optional(v.boolean()), // <-- make optional
     }),
 
     pdfFiles: defineTable({

@@ -1,5 +1,5 @@
 import { v } from "convex/values"
-import { mutation } from "./_generated/server"
+import { mutation, query } from "./_generated/server"
 
 export const createUser = mutation({
     args: {
@@ -19,7 +19,7 @@ export const createUser = mutation({
             await ctx.db.insert("users",{
                 email:args.email,
                 userName:args.userName,
-                imagerUrl:args.imageUrl,
+                imageUrl:args.imageUrl || "",
                 Upgrade: false,
             });
 
@@ -33,20 +33,36 @@ export const createUser = mutation({
 export const userUpgrade = mutation({
     args: {
         userEmail: v.string(),
+    },
+    handler: async (ctx, args) => {
+        const result = await ctx.db.query("users")
+            .filter((q) => q.eq(q.field("email"), args.userEmail))
+            .collect();
+        if (result.length > 0) {
+            await ctx.db.patch(
+                result[0]._id,
+                { Upgrade: true }
+            );
+            return "User upgraded successfully!";
+        } else {
+            throw new Error("User not found for upgrade.");
+        }
+    }
+});
+
+export const GetUserInfo = query({
+    args: {
+        userEmail: v.optional(v.string()),
 
     },
-    handler: async (ctx,args) => {
+    handler:async(ctx,args)=>{
+        if(!args?.userEmail)
+        {
+            return null;
+        };
         const result = await ctx.db.query("users")
         .filter((q) => q.eq(q.field("email"), args.userEmail))
         .collect();
-        if(result)
-            {
-                await ctx.db.patch(
-                result[0]._id,
-                { Upgrade: true }
-            )
-            return "User upgraded successfully!"
-        }
+        return result[0] || null;
     }
-
-})
+});

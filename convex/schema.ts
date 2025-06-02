@@ -3,10 +3,10 @@ import { v } from "convex/values";
 
 export default defineSchema({
     users:defineTable({
+        Upgrade: v.boolean(),
         userName: v.string(),
         email:  v.string(),
         imageUrl:  v.string(),
-        Upgrade: v.optional(v.boolean()), // <-- make optional
     }),
 
     pdfFiles: defineTable({

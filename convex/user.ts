@@ -19,7 +19,7 @@ export const createUser = mutation({
             await ctx.db.insert("users",{
                 email:args.email,
                 userName:args.userName,
-                imageUrl:args.imageUrl || "",
+                imageUrl:args.imageUrl,
                 Upgrade: false,
             });
 
@@ -35,14 +35,13 @@ export const userUpgrade = mutation({
         userEmail: v.string(),
     },
     handler: async (ctx, args) => {
+        console.log("Upgrading user with email:", args.userEmail);
         const result = await ctx.db.query("users")
             .filter((q) => q.eq(q.field("email"), args.userEmail))
             .collect();
+        console.log("Query result:", result);
         if (result.length > 0) {
-            await ctx.db.patch(
-                result[0]._id,
-                { Upgrade: true }
-            );
+            await ctx.db.patch(result[0]._id, { Upgrade: true });
             return "User upgraded successfully!";
         } else {
             throw new Error("User not found for upgrade.");

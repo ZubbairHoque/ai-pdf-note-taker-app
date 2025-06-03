@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Sparkles, FileText, Brain, Lock, Highlighter, MessageSquare } from "lucide-react";
+import { toast } from "sonner";
 
 export default function Home() {
   const { user } = useUser();
@@ -16,13 +17,23 @@ export default function Home() {
 
   useEffect(() => {
     if (user) {
+      // Create user in the database
       createUser({
         userName: user?.fullName ?? "",
         email: user?.primaryEmailAddress?.emailAddress ?? "",
         imageUrl: user?.imageUrl ?? "",
       });
+      
+      // Redirect to dashboard
+      router.push("/dashboard");
+      
+      // Show welcome toast
+      toast.success(`Welcome back, ${user.fullName || "User"}!`, {
+        description: "Your workspace is ready for you.",
+        duration: 5000,
+      });
     }
-  }, [user]);
+  }, [user, createUser, router]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,15 +60,28 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-4">
             {user ? (
-              <Button onClick={() => router.push("/dashboard")} className="bg-blue-600 hover:bg-blue-700">
+              <Button 
+                onClick={() => {
+                  router.push("/dashboard");
+                  toast.success(`Welcome to your workspace, ${user.fullName || "User"}!`);
+                }} 
+                className="bg-blue-600 hover:bg-blue-700"
+              >
                 Go to Dashboard
               </Button>
             ) : (
               <>
-                <Button variant="outline" onClick={() => router.push("/sign-in")} className="border-blue-600 text-blue-600 hover:bg-blue-50">
+                <Button 
+                  variant="outline" 
+                  onClick={() => router.push("/sign-in")} 
+                  className="border-blue-600 text-blue-600 hover:bg-blue-50"
+                >
                   Sign In
                 </Button>
-                <Button onClick={() => router.push("/sign-up")} className="bg-blue-600 hover:bg-blue-700">
+                <Button 
+                  onClick={() => router.push("/sign-up")} 
+                  className="bg-blue-600 hover:bg-blue-700"
+                >
                   Get Started
                 </Button>
               </>
@@ -76,13 +100,25 @@ export default function Home() {
             Upload PDFs, create notes, and leverage AI to analyze and extract insights from your documents. The intelligent assistant you need for research, study, and document management.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button onClick={() => router.push("/sign-up")} className="bg-blue-600 hover:bg-blue-700 text-lg py-6 px-8">
+            <Button 
+              onClick={() => {
+                router.push("/sign-up");
+                toast.info("Let's get you started with PDF Note Taker!", {
+                  description: "Create an account to unlock all features.",
+                });
+              }} 
+              className="bg-blue-600 hover:bg-blue-700 text-lg py-6 px-8"
+            >
               Start for Free
             </Button>
-            <Button variant="outline" onClick={() => {
-              const featuresSection = document.getElementById('features');
-              featuresSection?.scrollIntoView({ behavior: 'smooth' });
-            }} className="border-blue-600 text-blue-600 hover:bg-blue-50 text-lg py-6 px-8">
+            <Button 
+              variant="outline" 
+              onClick={() => {
+                const featuresSection = document.getElementById('features');
+                featuresSection?.scrollIntoView({ behavior: 'smooth' });
+              }} 
+              className="border-blue-600 text-blue-600 hover:bg-blue-50 text-lg py-6 px-8"
+            >
               Learn More
             </Button>
           </div>
@@ -222,7 +258,15 @@ export default function Home() {
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             Join thousands of researchers, students, and professionals who are enhancing their productivity with our AI-powered PDF Note Taker.
           </p>
-          <Button onClick={() => router.push("/sign-up")} className="bg-white text-blue-600 hover:bg-gray-100 text-lg py-6 px-10">
+          <Button 
+            onClick={() => {
+              router.push("/sign-up");
+              toast.info("You're making a great choice!", {
+                description: "Join our community of productive researchers and students.",
+              });
+            }} 
+            className="bg-white text-blue-600 hover:bg-gray-100 text-lg py-6 px-10"
+          >
             Get Started for Free
           </Button>
         </div>

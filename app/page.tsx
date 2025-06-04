@@ -17,23 +17,45 @@ export default function Home() {
 
   useEffect(() => {
     if (user) {
-      // Create user in the database
-      createUser({
-        userName: user?.fullName ?? "",
-        email: user?.primaryEmailAddress?.emailAddress ?? "",
-        imageUrl: user?.imageUrl ?? "",
-      });
+      // Create or check user in the database
+      const handleUser = async () => {
+        try {
+          const result = await createUser({
+            userName: user?.fullName ?? "",
+            email: user?.primaryEmailAddress?.emailAddress ?? "",
+            imageUrl: user?.imageUrl ?? "",
+          });
+          
+          // Redirect to dashboard
+          router.push("/dashboard");
+          
+          // Show appropriate welcome toast based on whether user is new or existing
+          if (result?.isNewUser) {
+            // New user welcome message
+            toast.success(`Hello, ${user.fullName || "User"}!`, {
+              duration: 5000,
+            });
+          } else {
+            // Existing user welcome back message
+            toast.success(`Welcome back, ${user.fullName || "User"}!`, {
+              duration: 5000,
+            });
+          }
+        } catch (error) {
+          console.error("Error handling user:", error);
+          // Still redirect to dashboard even if there's an error
+          router.push("/dashboard");
+          toast.success(`Welcome, ${user.fullName || "User"}!`, {
+            duration: 5000,
+          });
+        }
+      };
       
-      // Redirect to dashboard
-      router.push("/dashboard");
-      
-      // Show welcome toast
-      toast.success(`Welcome back, ${user.fullName || "User"}!`, {
-        description: "Your workspace is ready for you.",
-        duration: 5000,
-      });
+      handleUser();
     }
   }, [user, createUser, router]);
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,6 +64,12 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // If user is logged in, don't render the landing page content
+  // The useEffect will handle the redirection
+  if (user) {
+    return null; // Return nothing while redirecting
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -59,33 +87,19 @@ export default function Home() {
             <span className="font-bold text-xl">PDF Note Taker</span>
           </div>
           <div className="flex items-center gap-4">
-            {user ? (
-              <Button 
-                onClick={() => {
-                  router.push("/dashboard");
-                  toast.success(`Welcome to your workspace, ${user.fullName || "User"}!`);
-                }} 
-                className="bg-blue-600 hover:bg-blue-700"
-              >
-                Go to Dashboard
-              </Button>
-            ) : (
-              <>
-                <Button 
-                  variant="outline" 
-                  onClick={() => router.push("/sign-in")} 
-                  className="border-blue-600 text-blue-600 hover:bg-blue-50"
-                >
-                  Sign In
-                </Button>
-                <Button 
-                  onClick={() => router.push("/sign-up")} 
-                  className="bg-blue-600 hover:bg-blue-700"
-                >
-                  Get Started
-                </Button>
-              </>
-            )}
+            <Button 
+              variant="outline" 
+              onClick={() => router.push("/sign-in")} 
+              className="border-blue-600 text-blue-600 hover:bg-blue-50"
+            >
+              Sign In
+            </Button>
+            <Button 
+              onClick={() => router.push("/sign-up")} 
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              Get Started
+            </Button>
           </div>
         </div>
       </nav>
@@ -123,14 +137,14 @@ export default function Home() {
             </Button>
           </div>
         </div>
-        <div className="md:w-1/2 relative">
-          <div className="relative w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden shadow-2xl border border-gray-200">
+        <div className="md:w-2/3 w-full  relative">
+          <div className="relative w-full h-[450px] md:h-[500px] rounded-xl overflow-hidden shadow-2xl border border-gray-200">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-indigo-600/10"></div>
             <Image
-              src="/workspace-preview.png"
+              src={'/landpage.png'}
               alt="PDF Note Taker Interface"
               fill
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", objectPosition: "center center" }}
               className="rounded-xl"
               priority
             />

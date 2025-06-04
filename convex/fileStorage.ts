@@ -96,3 +96,16 @@ export const DeleteFile = mutation({
     return { success: true };
   },
 });
+
+export const searchPdfFiles = query({
+  args: { fileNameQuery: v.string() },
+  handler: async (ctx, args) => {
+    const results = await ctx.db
+      .query("pdfFiles")
+      .withSearchIndex("search_fileName", q =>
+        q.search("fileName", args.fileNameQuery)
+      )
+      .take(10); // Adjust the number as needed
+    return results;
+  },
+});

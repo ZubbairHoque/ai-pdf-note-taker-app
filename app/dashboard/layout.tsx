@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Sidebar from "./_components/sidebar";
 import UploadPdfDialogue from "./_components/UploadPdfDialogue";
-import Header from "./_components/Header";
+import Header from './_components/Header'
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";

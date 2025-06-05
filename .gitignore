@@ -17,6 +17,10 @@
 /.next/
 /out/
 
+.next/cache
+.next/typescript/*
+
+
 # production
 /build
 

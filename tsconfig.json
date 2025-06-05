@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "convex/user.js", "app/page.js", "app/dashboard/layout.tsxx", "app/api/pdf-loader/route.js", "app/workspace/_components/EditorExtension.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "convex/user.js", "app/page.js", "app/dashboard/layout.tsx", "app/api/pdf-loader/route.js", "app/workspace/_components/EditorExtension.tsx"],
   "exclude": ["node_modules"]
 }

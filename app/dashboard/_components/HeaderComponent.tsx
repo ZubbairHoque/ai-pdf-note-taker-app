@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
@@ -8,6 +8,7 @@ import Image from "next/image";
 
 
 function HeaderComponent() {
+  const { user } = useUser();
   const [searchTerm, setSearchTerm] = useState("");
 
   // Optional: debounce input to prevent too many API calls
@@ -17,8 +18,20 @@ function HeaderComponent() {
     return () => clearTimeout(handler);
   }, [searchTerm]);
 
-  // Query search results using debounced term
-  const results = useQuery(api.fileStorage.searchPdfFiles, debouncedTerm ? { fileNameQuery: debouncedTerm } : "skip");
+  // Get the user's email
+  const userEmail = user?.emailAddresses[0]?.emailAddress || "";
+
+  // Query search results using debounced term and filter by user's email
+  // Only perform the search if we have both a search term and a user email
+  const results = useQuery(
+    api.fileStorage.searchPdfFiles, 
+    debouncedTerm && userEmail 
+      ? { 
+          fileNameQuery: debouncedTerm,
+          userEmail: userEmail
+        } 
+      : "skip"
+  );
 
   const typeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -34,20 +47,26 @@ function HeaderComponent() {
           placeholder="Search"
           className="rounded-md bg-gray-100 px-2 py-3 w-[150%] text-black"
         />
-        {/* Display search results */}
-        {results && results.length > 0 && (
-          <ul className="bg-white border p-2 w-[680px] rounded shadow max-h-[400px] overflow-y-auto z-10">
-            {results.map((file: Doc<"pdfFiles">) => (
-              <li key={file._id} className="hover:bg-gray-100 p-2 rounded cursor-pointer">
-                <Link href={`/workspace/${file.fileID}`} className="flex items-center gap-3">
-                  <div className="flex-shrink-0">
-                    <Image src="/pdf.png" alt="PDF" width={30} height={30} />
-                  </div>
-                  <span className="text-sm font-medium">{file.fileName}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+        {/* Display search results or no results message */}
+        {debouncedTerm && (
+          <div className="bg-white border p-2 w-[680px] rounded shadow max-h-[400px] overflow-y-auto z-10">
+            {results && results.length > 0 ? (
+              <ul>
+                {results.map((file: Doc<"pdfFiles">) => (
+                  <li key={file._id} className="hover:bg-gray-100 p-2 rounded cursor-pointer">
+                    <Link href={`/workspace/${file.fileID}`} className="flex items-center gap-3">
+                      <div className="flex-shrink-0">
+                        <Image src="/pdf.png" alt="PDF" width={30} height={30} />
+                      </div>
+                      <span className="text-sm font-medium">{file.fileName}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-500 text-sm p-2">No matching files found</p>
+            )}
+          </div>
         )}
       </div>
     </div>

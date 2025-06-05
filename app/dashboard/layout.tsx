@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Sidebar from "./_components/sidebar";
 import UploadPdfDialogue from "./_components/UploadPdfDialogue";
-import Header from './_components/Header'
+import HeaderComponent from './_components/HeaderComponent'
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -33,7 +33,7 @@ function DashboardLayout({
         />
       </div>
       <div className="md:ml-64">
-        <Header />
+        <HeaderComponent />
         <div className="p-10">
           {children}
         </div>

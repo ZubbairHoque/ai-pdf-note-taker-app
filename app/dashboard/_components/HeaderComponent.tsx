@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 
-function Header() {
+function HeaderComponent() {
   const [searchTerm, setSearchTerm] = useState("");
 
   // Optional: debounce input to prevent too many API calls
@@ -54,4 +54,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default HeaderComponent;

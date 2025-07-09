@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.12.5",
+    "@clerk/nextjs": "^6.24.0",
     "@floating-ui/react": "^0.27.8",
     "@google/genai": "^0.10.0",
     "@google/generative-ai": "^0.24.0",
